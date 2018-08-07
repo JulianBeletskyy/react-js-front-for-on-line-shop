@@ -5,6 +5,7 @@ import { toggleModal, updateModal } from 'actions/design'
 import { setProffesional } from 'actions/schedule_cart'
 import Price from 'components/price'
 import moment from 'moment'
+import 'moment/locale/pt'
 import RadioSwitch from 'components/inputs/radio_switch'
 import BtnMain from 'components/buttons/btn_main'
 import { getLang } from 'utils/lang'
@@ -19,6 +20,8 @@ class ServiceCart extends Component {
 
 	getDuration = () => {
 		let temp = ''
+		moment.locale('pt')
+		console.log(moment.duration(this.props.duration))
 		for (let k in moment.duration(this.props.duration)._data) {
 			if (moment.duration(this.props.duration)._data[k]) {
 				temp += `${moment.duration(this.props.duration)._data[k]} ${k} `
@@ -67,13 +70,13 @@ class ServiceCart extends Component {
 	}
 
 	openProfessionals = () => {
-		store.dispatch(toggleModal(true, this.professionalsList, 'modal-sm', 'Profissionais'))
+		store.dispatch(toggleModal(true, this.professionalsList, 'modal-sm', getLang('Profissionais')))
 	}
 
     render() {
     	const { salon } = this.props
     	const { professional } = this.props.schedule_cart.proffesional
-    	const textButton = this.props.schedule_cart.proffesional.professional.id ? 'Alterar' : 'Selecione um profissional'
+    	const textButton = this.props.schedule_cart.proffesional.professional.id ? getLang('Alterar') : getLang('Selecione um profissional')
         return (
         	<div className="bg-white px-3 py-3 rounded">
 	            <div className="fs-16 mb-3">

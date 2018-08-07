@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { toggleModal } from 'actions/design.js'
 import Modal from 'react-responsive-modal'
 import './style.css'
+import { getLang } from 'utils/lang'
 
 const emptyElement = props => <div></div>
 
@@ -18,7 +19,7 @@ class CustomModal extends Component {
         const overlayClass = data && data.position === 'center' ? 'align-items-center' : 'align-items-start'
         return (
 	        <Modal open={open} onClose={this.onCloseModal} center showCloseIcon={false} classNames={{modal: `rounded modal-body ${className}`, overlay: overlayClass}}>
-                { title ? <h4>{title}</h4> : ''}
+                { title ? <h4>{getLang(title)}</h4> : ''}
 	          	<div>{component}</div>
 	        </Modal>
         );

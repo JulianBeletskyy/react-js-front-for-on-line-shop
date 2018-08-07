@@ -111,7 +111,7 @@ class Calendar extends Component {
     				{ 
     					this.getActiveIntervals().length
     					? 	this.getActiveIntervals().map((item, i) => this.printTimes(item, i, times.length))
-    					: 	<div className="text-center p-3">No available times for this date</div>
+    					: 	<div className="text-center p-3">{getLang('Não há horários disponíveis nesta data')}</div>
 				 	}
     			</div>
 			</div>

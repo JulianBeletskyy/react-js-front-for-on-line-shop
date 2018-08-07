@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import store from 'store'
 import { saveAvatar } from 'actions/user'
 import './style.css'
+import { getLang } from 'utils/lang'
 
 class Avatar extends Component {
 	state = {
@@ -48,7 +49,7 @@ class Avatar extends Component {
                     edit
                     ?   <div className="position-absolute avatar-hover w-100 text-center">
                             <div className="text-avatar position-absolute text-white">
-                                <div>Atualizar foto do perfil</div>
+                                <div>{getLang('Atualizar foto do perfil')}</div>
                                 <i className="fas fa-camera"></i>
                             </div>
                         </div>

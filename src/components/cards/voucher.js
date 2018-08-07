@@ -51,7 +51,7 @@ class CardVoucher extends Component {
 						</div>
 						{
 							this.props.created_at
-							? 	<div>{getDate(this.props.created_at)} ({this.getDays()} dias)</div>
+							? 	<div>{getDate(this.props.created_at)} ({this.getDays()} {getLang('dias')})</div>
 							: 	''
 						}
 					</div>
