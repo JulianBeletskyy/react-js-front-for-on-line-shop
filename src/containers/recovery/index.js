@@ -62,7 +62,7 @@ class Recovery extends Component {
 				                        <BtnMain
 		                                    className="font-weight-bold btn-block"
 		                                    onClick={this.recovery}
-		                                    title="Salvar" />
+		                                    title="Enviar" />
                                     </div>
                                 </div>
 			    			</div>
