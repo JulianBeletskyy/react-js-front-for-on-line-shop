@@ -32,7 +32,7 @@ class Credits extends Component {
 		store.dispatch(toggleModal(true, SendCreditsForm, 'modal-md'))
 	}
 
-	printCreditsCard = (item, i) => <div key={i} className="col-xl-4 col-lg-6 mb-3"><CardCredit {...item} /></div>
+	printCreditsCard = (item, i) => <div key={i} className="col-xl-4 col-md-6 mb-3"><CardCredit {...item} /></div>
 
 	render() {
 		return (

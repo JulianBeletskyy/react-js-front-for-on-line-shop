@@ -83,18 +83,14 @@ class ServiceCart extends Component {
             	<Price current={this.props.price} />
 	            <div className="color-grey mb-2">{ this.getDuration() }</div>
 	            <div className="border-bottom mb-2  mr--3 ml--3"></div>
-	            {
-	            	this.props.schedule_cart.professionals.length
-	            	? 	<div className="d-flex justify-content-between mb-2">
-			            	{
-			            		professional.id !== false
-			            		? 	<div className="color-grey">{`com ${professional.user.first_name} ${professional.user.first_name}`}</div>
-			            		: 	''
-			            	}
-		            		<div className="pointer color-green align-self-end" onClick={this.openProfessionals}>{getLang(textButton)}</div>
-	            		</div>
-	            	: 	''
-	            }
+            	<div className="d-flex justify-content-between mb-2">
+	            	{
+	            		professional.id !== false
+	            		? 	<div className="color-grey">{`com ${professional.user.first_name} ${professional.user.first_name}`}</div>
+	            		: 	null
+	            	}
+            		<div className="pointer color-green align-self-end" onClick={this.openProfessionals}>{getLang(textButton)}</div>
+        		</div>
 	            <div className="border-bottom mb-2 mr--3 ml--3"></div>
             	<div className="color-grey">{`${salon.address.title}, ${salon.address.number} ${salon.address.street}`}</div>
 			</div>

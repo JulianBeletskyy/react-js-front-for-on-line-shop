@@ -31,7 +31,7 @@ class CardCredit extends Component {
 	            		{getLang('Promoção')}
 	            	</div>
 	            	<div className="d-flex align-items-center mb-3">
-	            		<span className="color-grey">{this.props.amount} {getLang('Créditos por')} </span>
+	            		<span className="color-grey">{this.props.amount} <br className="d-none d-md-block d-lg-none" /><span className="text-sm-nowrap">{getLang('Créditos por')} </span></span>
 	            		&nbsp;
 	            		<Price style={{fontSize: 18}} current={this.props.discount_price} />
 	            	</div>

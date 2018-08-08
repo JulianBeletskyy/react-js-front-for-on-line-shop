@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import store, { history } from 'store'
+import { addToCart } from 'actions/cart'
+import { setProffesional } from 'actions/schedule_cart'
 import {
     Accordion,
     AccordionItem,
@@ -32,14 +35,33 @@ class CustomAccordion extends Component {
                         <div className="col-sm-6">
                             <BtnMain
                                 className="btn-outline font-weight-bold btn-block"
+                                onClick={this.addToCart(item.id)}
                                 title="Adicionar ao carrinho" />
                             <BtnMain
                                 className="font-weight-bold btn-block"
+                                onClick={this.addToScheduleCart(item)}
                                 title="Agendar agora" />
                         </div>
                     </div>
                     { ! last ? <div className="border-bottom col-12 pt-4 mb-4"></div> : '' }
                 </div>
+    }
+
+    addToScheduleCart = item => e => {
+        e.stopPropagation()
+        const emptyData = {
+            professional: {
+                id: false
+            },
+            schedule: []
+        }
+        store.dispatch(setProffesional(emptyData))
+        history.push(`/schedule/${item.id}`, item)
+    }
+
+    addToCart = id => e => {
+        e.stopPropagation()
+        store.dispatch(addToCart(id, 'service', {quantity: 1}))
     }
 
     getDuration = duration => {

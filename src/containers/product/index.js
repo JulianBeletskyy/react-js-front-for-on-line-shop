@@ -24,6 +24,7 @@ import Pagination from 'components/pagination'
 import TextArea from 'components/inputs/textarea'
 import PromotionBlock from 'components/blocks/promotion'
 import { getLang } from 'utils/lang'
+import Carousel from 'components/carousel'
 
 class Product extends Component {
 	constructor(props) {
@@ -244,6 +245,11 @@ class Product extends Component {
 				</div>
 	}
 
+	printCarouselItems = items =>
+		(
+			items.map((item, i) => <div><img className="rounded img-fluid" src={item.image_url} alt="" /></div>)
+		)
+
     render() {
     	const { product, salon, vendor_services } = this.props.products
     	product.images = [
@@ -252,6 +258,10 @@ class Product extends Component {
 					{image_url: '/assets/images/default-image-square-big-green.png'},
 					{image_url: '/assets/images/default-image-square-big-orange.png'},
 				]
+		const settings = {
+			dots: true,
+		}
+
         return (
         	<div className="bg-main pt-4">
 	        	<div className="font-avenir pt-2 bg-white">
@@ -259,7 +269,9 @@ class Product extends Component {
 			            <div className="row">
 			            	<div className="col-12 col-sm-4">
 			            		<ImageMultiPreview onClick={this.openLightBox} className="d-none d-sm-flex" images={product.images} />
-			            		<ImagePreview className="d-block d-sm-none" images={product.images} />
+			            		<div className="d-block d-sm-none mb-4">
+			            			<Carousel items={this.printCarouselItems(product.images)} settings={settings} />
+		            			</div>
 			            	</div>
 			            	<div className="col-12 col-sm-8">
 			            		<h4>

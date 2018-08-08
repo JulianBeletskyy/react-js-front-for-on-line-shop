@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import store, { history } from 'store'
 import { addToCart } from 'actions/cart'
 import { addToWishList, removeFromWishList } from 'actions'
+import { setProffesional } from 'actions/schedule_cart'
 import Stars from 'components/stars'
 import Price from 'components/price'
 import BtnMain from 'components/buttons/btn_main'
@@ -64,6 +65,13 @@ class CardService extends Component {
 
 	addToScheduleCart = e => {
 		e.stopPropagation()
+		const emptyData = {
+	        professional: {
+	            id: false
+	        },
+	        schedule: []
+		}
+		store.dispatch(setProffesional(emptyData))
 		history.push(`/schedule/${this.props.id}`, this.props)
 	}
 
