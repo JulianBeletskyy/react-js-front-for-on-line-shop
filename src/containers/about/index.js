@@ -32,6 +32,7 @@ class About extends Component {
     render() {
         return (
         	<div className="bg-main font-avenir about-wrap">
+						<div className="telephone">
         		<div className="container inner-about d-flex align-items-center pt-2" style={{minHeight: 400}}>
         			<div className="row justify-content-center">
 	        			<div className="col-xl-6 col-md-7 col-sm-10 col-12">
@@ -76,6 +77,7 @@ class About extends Component {
 						</div>
 					</div>
         		</div>
+					</div>	
 			</div>
         );
     }
