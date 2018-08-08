@@ -28,7 +28,7 @@ class LoginForm extends Component {
         script.onload = () => {
             window.gapi.load('auth2', () => {
                 let auth2 = window.gapi.auth2.init({
-                    'client_id': '55526766344-8jfclisoipen6s8r4rmvn1v9hdnpoh04.apps.googleusercontent.com',
+                    'client_id': '614936763337-o86tgjfnstlhpb11222av4uk2uqm216d.apps.googleusercontent.com', //55526766344-8jfclisoipen6s8r4rmvn1v9hdnpoh04.apps.googleusercontent.com
                     'cookiepolicy': 'google-signin-scope',
                     'scope': 'profile email'
                 });
