@@ -506,12 +506,20 @@ path.cls-8 {
 }
 
 .about-wrap {
-	background-image: url('/assets/images/about1.png');
+	background-image: url('/assets/images/about-fon.png');
 	background-repeat: no-repeat;
 	height: calc(100vh - 190px);
 	background-position: -5px -5px;
 	background-size: 63%;
 	min-height: 500px;
+}
+
+.telephone {
+	background-image: url('/assets/images/telephone.png');
+	background-repeat: no-repeat;
+	height: 700px;
+	background-position: 40px 100px;
+	background-size: 33%;
 }
 
 .vh-100 {
@@ -523,7 +531,7 @@ path.cls-8 {
 }
 
 .inner-about {
-	height: calc(100% - 190px);
+	height: calc(100% - 300px);
 }
 
 .not-found-wrap {
