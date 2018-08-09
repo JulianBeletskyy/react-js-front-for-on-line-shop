@@ -39,6 +39,10 @@ class ScheduleCart extends Component {
 		}
 	}
 
+	componentDidMount() {
+		console.log("%cЦя консоль для розробників а не для тестерів %c", "background: #3F51B5;color:#FFF;padding:5px;border-radius: 5px;line-height: 26px;font-size:24px;", "")
+	}
+
     render() {
         return (
         	<div className="bg-main font-avenir pt-4">
