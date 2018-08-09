@@ -19,20 +19,24 @@ class Viewer extends Component {
 	}
 
 	render() {
-		const { open, img, current } = this.props.design.lightbox
+		const { open, img, current, settings } = this.props.design.lightbox
+		const defaultSettings = {
+			images: img,
+			isOpen: open,
+			onClickPrev: this.gotoPrevious,
+			onClickNext: this.gotoNext,
+			currentImage: current,
+			backdropClosesModal: true,
+			theme: LIGHTBOX_THEME,
+			preloadNextImage: false,
+			preventScroll: false,
+			enableKeyboardInput: false,
+			onClose: this.closeLightbox,
+			...settings
+		}
+
 		return (
-			<Lightbox
-		        images={img}
-		        isOpen={open}
-		        onClickPrev={this.gotoPrevious}
-		        onClickNext={this.gotoNext}
-		        currentImage={current}
-		        backdropClosesModal={true}
-		        theme={LIGHTBOX_THEME}
-		        preloadNextImage={false}
-		        preventScroll={false}
-		        enableKeyboardInput={false}
-		        onClose={this.closeLightbox} />
+			<Lightbox {...defaultSettings} />
 		)
 	}
 }

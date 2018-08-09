@@ -53,7 +53,7 @@ class Header extends Component {
     }
 
     changePage = item => e => {
-        history.push(`/category/service/${item.id}`)
+        history.push(`/category/${this.props.design.linkList}/${item.id}`)
         store.dispatch(setActiveCategory(item))
     }
 

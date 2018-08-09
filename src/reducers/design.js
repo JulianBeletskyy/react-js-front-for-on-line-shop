@@ -26,6 +26,7 @@ const initialState = {
         current: 0,
         img: [DEFAULT_IMG, DEFAULT_IMG, DEFAULT_IMG, DEFAULT_IMG],
         open: false,
+        settings: {},
     },
     blogs: [],
     feedbacks: []

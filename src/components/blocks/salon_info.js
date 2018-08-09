@@ -11,14 +11,19 @@ class SalonInfo extends Component {
 	}
 
     render() {
-    	const { address, social_media } = this.props
+    	const { address, social_media, hide } = this.props
         return (
         	<div className="row align-items-stretch">
-	            <div className="col-lg-4 mb-2">
-	            	<div className="rounded border p-3 h-100">
-	            		<h5>{getLang('Horários')}</h5>
-	            	</div>
-	            </div>
+	        	{
+	        		hide
+	        		? 	<div className="col-lg-4 mb-2">
+			            	<div className="rounded border p-3 h-100">
+			            		<h5>{getLang('Horários')}</h5>
+			            	</div>
+			            </div>
+	        		: 	null
+	        	}
+	            
 	            <div className="col-lg-4 col-sm-6 mb-2">
 	            	<div className="rounded border p-3 h-100">
 	            		<h5>{getLang('Endereço')}</h5>
@@ -26,15 +31,22 @@ class SalonInfo extends Component {
 	            		{
 	            			address.latitude
 	            			? 	<AddressMap {...address} />
-	            			: 	''
+	            			: 	null
 	            		}
 	            	</div>
 	            </div>
 	            <div className="col-lg-4 col-sm-6 mb-2">
 	            	<div className="rounded border p-3 h-100">
-	            		<h5>{getLang('Telefone')}</h5>
-            			<div className="color-grey mb-2">{address.phone}</div>
-	            		{ social_media.map((item, i) => this.printSocial(item, i)) }
+	            	{
+	            		hide
+	            		? 	<div>
+			            		<h5>{getLang('Telefone')}</h5>
+		            			<div className="color-grey mb-2">{address.phone}</div>
+	            			</div>
+	            		: 	null
+	            	}
+	            		
+            		{ social_media.map((item, i) => this.printSocial(item, i)) }
 	            	</div>
 	            </div>
 			</div>

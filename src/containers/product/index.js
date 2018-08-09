@@ -33,7 +33,8 @@ class Product extends Component {
 		this.state = {
 			lightboxIsOpen: false,
 			activeImg: 0,
-			page: 1
+			page: 1,
+			pageQuestions: 1
 		}
 		if (props.match.params.id) {
 			store.dispatch(getProduct(props.match.params.id))
@@ -43,8 +44,14 @@ class Product extends Component {
 				store.dispatch(getQuestions(this.props.products.salon.id))
 			})
 			store.dispatch(getProductComments(props.match.params.id))
-
 		}
+
+		this.images = [
+			{src: '/assets/images/default-image-square-big.png'},
+			{src: '/assets/images/default-image-square-big-blue.png'},
+			{src: '/assets/images/default-image-square-big-green.png'},
+			{src: '/assets/images/default-image-square-big-orange.png'},
+		]
 	}
 
 	changePage = page => {
@@ -94,7 +101,7 @@ class Product extends Component {
 	}
 
 	getQuestionsList = () => {
-		return this.props.products.questions.map((item, i) =>
+		return this.props.products.questions.slice((this.state.pageQuestions - 1) * 3, this.state.pageQuestions * 3).map((item, i) =>
 			(
 				<div key={i}>
 					<div className="row mb-3">
@@ -129,11 +136,14 @@ class Product extends Component {
 				<div className="col-md-8">
 					<div className="p-4 rounded border">
 						{this.getQuestionsList()}
+						<div className="mb-2">
+							<Pagination
+	    						onChange={this.changePageQuestions} 
+	    						total={Math.ceil(this.props.products.questions.length / 3)} 
+	    						active={this.state.pageQuestions} />
+						</div>
 						<div className="row justify-content-center">
 							<div className="col-sm-8">
-								<BtnMain
-			        				className="font-weight-bold btn-outline btn-block"
-			        				title="Ver todas as perguntas" />
 		        				<BtnMain
 			        				className="font-weight-bold btn-block"
 			        				onClick={this.openQuestion}
@@ -144,6 +154,10 @@ class Product extends Component {
 				</div>
 			</div>
 		)
+
+	changePageQuestions = pageQuestions => {
+		this.setState({pageQuestions})
+	}
 
 	toggleWish = val => {
 		val ? store.dispatch(addToWishList('product', this.props.products.product.id)) : store.dispatch(removeFromWishList('product', this.props.products.product.id))
@@ -245,6 +259,15 @@ class Product extends Component {
 				</div>
 	}
 
+	openFullScreen = i => {
+		const settings = {
+			showImageCount: false,
+			showCloseButton: false,
+		}
+
+		store.dispatch(toggleLightBox(true, [this.images[i]], undefined, settings))
+	}
+
 	printCarouselItems = items =>
 		(
 			items.map((item, i) => <div><img className="rounded img-fluid" src={item.image_url} alt="" /></div>)
@@ -260,6 +283,7 @@ class Product extends Component {
 				]
 		const settings = {
 			dots: true,
+			dotsClass: 'slick-dots product-dots-slider'
 		}
 
         return (
@@ -269,8 +293,8 @@ class Product extends Component {
 			            <div className="row">
 			            	<div className="col-12 col-sm-4">
 			            		<ImageMultiPreview onClick={this.openLightBox} className="d-none d-sm-flex" images={product.images} />
-			            		<div className="d-block d-sm-none mb-4">
-			            			<Carousel items={this.printCarouselItems(product.images)} settings={settings} />
+			            		<div className="d-block d-sm-none mb-5">
+			            			<Carousel items={this.printCarouselItems(product.images)} onClickItem={this.openFullScreen} settings={settings} />
 		            			</div>
 			            	</div>
 			            	<div className="col-12 col-sm-8">
@@ -331,7 +355,7 @@ class Product extends Component {
 		            			<Tabs tabs={[
 		            				{
 		            					title: getLang('Sobre'),
-		            					content: <div className="p-3"><SalonInfo {...salon} /></div>
+		            					content: <div className="p-3"><SalonInfo {...salon} hide={vendor_services.length} /></div>
 		            				}, {
 		            					title: getLang('Produtos'),
 		            					content: <div className="p-3"><MainList type="product" itemType="small" /></div>

@@ -252,6 +252,20 @@ path.cls-8 {
     margin-left: 30px !important;
 }
 
+.product-dots-slider.slick-dots {
+	background: #94BCAC;
+	padding: 6px;
+}
+
+.slick-dots.product-dots-slider li button:before {
+	color: #D6D6D6;
+	opacity: 1;
+}
+
+.slick-dots.product-dots-slider li.slick-active button:before {
+	color: #FFCC00;
+}
+
 .slick-current .paggin-plus {
 	opacity: 1;
 }

@@ -74,10 +74,10 @@ export const toggleLinkList = value =>
         value
     })
 
-export const toggleLightBox = (open, img, current) =>
+export const toggleLightBox = (open, img, current, settings) =>
     ({
         type: types.TOGGLE_LIGHT_BOX,
-        data: {img: img.length ? img : [DEFAULT_IMG, DEFAULT_IMG, DEFAULT_IMG, DEFAULT_IMG], open, current},
+        data: {img: img.length ? img : [DEFAULT_IMG, DEFAULT_IMG, DEFAULT_IMG, DEFAULT_IMG], open, current, settings},
     })
 
 export const setLanguage = value => {
