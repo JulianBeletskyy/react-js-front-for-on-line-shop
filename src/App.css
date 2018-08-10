@@ -253,7 +253,6 @@ path.cls-8 {
 }
 
 .product-dots-slider.slick-dots {
-	background: #94BCAC;
 	padding: 6px;
 }
 
@@ -263,7 +262,7 @@ path.cls-8 {
 }
 
 .slick-dots.product-dots-slider li.slick-active button:before {
-	color: #FFCC00;
+	color: #94BCAC;
 }
 
 .slick-current .paggin-plus {

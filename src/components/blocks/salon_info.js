@@ -35,20 +35,24 @@ class SalonInfo extends Component {
 	            		}
 	            	</div>
 	            </div>
-	            <div className="col-lg-4 col-sm-6 mb-2">
-	            	<div className="rounded border p-3 h-100">
-	            	{
-	            		hide
-	            		? 	<div>
-			            		<h5>{getLang('Telefone')}</h5>
-		            			<div className="color-grey mb-2">{address.phone}</div>
-	            			</div>
-	            		: 	null
-	            	}
-	            		
-            		{ social_media.map((item, i) => this.printSocial(item, i)) }
-	            	</div>
-	            </div>
+	            {
+	            	social_media.length && hide
+	            	? 	<div className="col-lg-4 col-sm-6 mb-2">
+			            	<div className="rounded border p-3 h-100">
+			            	{
+			            		hide
+			            		? 	<div>
+					            		<h5>{getLang('Telefone')}</h5>
+				            			<div className="color-grey mb-2">{address.phone}</div>
+			            			</div>
+			            		: 	null
+			            	}
+			            		
+		            		{ social_media.map((item, i) => this.printSocial(item, i)) }
+			            	</div>
+			            </div>
+	            	: 	null
+	            }
 			</div>
         );
     }
