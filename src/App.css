@@ -27,6 +27,10 @@ body {
 	font-size: 14px;
 }
 
+#lightboxBackdrop {
+	touch-action: none;
+}
+
 .App {
 	overflow-x: hidden;
 }

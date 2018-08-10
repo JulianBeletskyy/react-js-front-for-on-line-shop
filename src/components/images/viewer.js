@@ -22,9 +22,10 @@ class Viewer extends Component {
 
 	preventDefault = e => {
 		e = e || window.event;
-		if (e.preventDefault)
-		e.preventDefault();
-		e.returnValue = false;  
+		if (e.preventDefault) {
+			e.preventDefault();
+		}
+		e.returnValue = false;
 	}
 
 	preventDefaultForScrollKeys = e => {
@@ -39,7 +40,7 @@ class Viewer extends Component {
 		window.addEventListener('DOMMouseScroll', this.preventDefault, false);
 		window.onwheel = this.preventDefault; // modern standard
 		window.onmousewheel = document.onmousewheel = this.preventDefault; // older browsers, IE
-		window.ontouchmove  = this.preventDefault; // mobile
+		//window.touchmove  = this.preventDefault; // mobile
 		document.onkeydown  = this.preventDefaultForScrollKeys;
 	}
 
@@ -48,11 +49,12 @@ class Viewer extends Component {
 		window.removeEventListener('DOMMouseScroll', this.preventDefault, false);
 		window.onmousewheel = document.onmousewheel = null; 
 		window.onwheel = null; 
-		window.ontouchmove = null;  
+		//window.touchmove = null;  
 		document.onkeydown = null;  
 	}
 
 	componentDidMount() {
+		
 		history.listen((location, action) => {
             this.closeLightbox()
         })
