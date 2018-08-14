@@ -6,6 +6,7 @@ import TextArea from 'components/inputs/textarea'
 import BtnMain from 'components/buttons/btn_main'
 import Price from 'components/price'
 import Counter from 'components/counter'
+import { getLang } from 'utils/lang'
 
 class SendCreditsForm extends Component {
     state = {
@@ -30,25 +31,25 @@ class SendCreditsForm extends Component {
         return (
         	<div>
                 <div className="text-center mb-3">
-                    <h4>Enviar créditos</h4>
-                    <span>Aplica-se uma taxa de 15%.</span>
+                    <h4>{getLang('Enviar créditos')}</h4>
+                    <span>{getLang('Aplica-se uma taxa de 15%.')}</span>
                 </div>
         		<Input 
                     required
-                    bottomText="Para quem devemos enviar os créditos?"
+                    bottomText={getLang("Para quem devemos enviar os créditos?")}
                     label="E-mail"
                     inputRef={ref => this.email = ref} />
         		<TextArea 
                     required
-                    bottomText="Está é a mensagem que será enviada junto com os créditos."
-                    label="Mensagem"
+                    bottomText={getLang("Está é a mensagem que será enviada junto com os créditos.")}
+                    label={getLang("Mensagem")}
                     inputRef={ref => this.message = ref} />
                 <div>
-                    Insira a quantidade de créditos que deseja enviar
+                    {getLang('Insira a quantidade de créditos que deseja enviar')}
                 </div>
 
                 <div className="color-grey">
-                    R$ 1,00 = 7,0 Créditos
+                    R$ 1,00 = 7,0 {getLang('Créditos')}
                 </div>
 
                 <div className="row align-items-center">
