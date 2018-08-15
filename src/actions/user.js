@@ -152,6 +152,16 @@ export const getCredits = () => dispatch =>
         })
     )
 
+export const buyCredits = data => dispatch => 
+    (
+        post(`api/credits/buy/cielo`, true, data).then(json => {
+            console.log(json)
+            if (json.object) {
+
+            }
+        })
+    )
+
 export const getBundles = () => dispatch => 
     (
         get(`api/credit-bundles`).then(json => {
@@ -240,6 +250,15 @@ export const getPurchases = () => dispatch =>
         get(`api/user/purchases`, false).then(json => {
             if (json.object) {
                 dispatch(setUserKey(json.object, 'purchases'))
+            }
+        })
+    )
+
+export const getPurchase = () => dispatch => 
+    (
+        get(`api/user/purchase`, false).then(json => {
+            if (json.object) {
+                console.log(json.object)
             }
         })
     )

@@ -20,7 +20,7 @@ class SideMenuWeb extends Component {
                     <div className="img-fluid w-15 h-100 pr-2"></div>
                     <object data={`/assets/svg/${item.svg_icon}`} width="15%" className="svg-icon" type="image/svg+xml"></object>
                     <object data={`/assets/svg/${item.svg_icon_hover}`} width="15%" className="svg-icon-hover" type="image/svg+xml"></object>
-                    <span className="w-85 fs-18 pl-4">{getLang(item.title)}</span>
+                    <span className="w-85 fs-16 pl-4">{getLang(item.title)}</span>
                 </div>
     }
 
@@ -34,7 +34,7 @@ class SideMenuWeb extends Component {
                         <Avatar image={image_url} defaultImg="/assets/images/default-avatar.png" edit={false} />
         			</div>
 	            </div>
-	            <h4 className="text-center mb-5"><strong>{`${first_name} ${last_name}`}</strong></h4>
+	            <h5 className="text-center mb-5"><strong>{`${first_name} ${last_name}`}</strong></h5>
                 { LIST_MENU.map((item, i) => this.printList(item, i)) }
 			</div>
         );

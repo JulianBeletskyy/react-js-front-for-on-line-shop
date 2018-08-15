@@ -54,7 +54,7 @@ class CardNotification extends Component {
 			        				onClick={this.remove}
 			        				title="Excluir" />
 	        				</div>
-		            		{
+		            		{/*
 		            			this.props.type === 'gift'
 		            			? 	<div className="col order-4 order-sm-1 px-1 mb-2">
 				            			<BtnMain
@@ -63,7 +63,7 @@ class CardNotification extends Component {
 					        				title="Agradecer" />
 			        				</div>
 		            			: 	''
-		            		}
+		            		*/}
         				</div>
 	            	</div>
 	            </div>

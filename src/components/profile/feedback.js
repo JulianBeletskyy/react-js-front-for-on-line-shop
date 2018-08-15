@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from 'store'
-import { getReviewsProduct, getReviewsVendor } from 'actions/user'
+import { getReviewsProduct, getReviewsVendor, getPurchase } from 'actions/user'
 import CardReview from 'components/cards/review'
 import CardFeedback from 'components/cards/feedback'
 import { getLang } from 'utils/lang'
@@ -16,7 +16,9 @@ class Feedback extends Component {
 	componentWillMount() {
 		store.dispatch(getReviewsProduct())
 		store.dispatch(getReviewsVendor())
+		store.dispatch(getPurchase())
 	}
+
 	printReviews = (item, i) => {
 		return 	<div key={i} className="col-lg-6 mb-3">
 					<CardReview {...item} />

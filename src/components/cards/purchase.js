@@ -18,7 +18,6 @@ class CardPurchase extends Component {
 	}
 
 	loadOrder = () => {
-		
 		const [last, ...other] = this.props.receipts[0].receipt.split('/').reverse()
 		store.dispatch(loadOrder(this.props.receipts[0].receipt))
 		.then(blob => {

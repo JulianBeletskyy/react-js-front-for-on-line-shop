@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from 'store'
-import { getCredits, getBundles } from 'actions/user'
+import { getCredits, getBundles, buyCredits, getCreditCards } from 'actions/user'
 import { toggleModal } from 'actions/design'
 import Price from 'components/price'
 import BtnMain from 'components/buttons/btn_main'
@@ -9,6 +9,7 @@ import Counter from 'components/counter'
 import { SendCreditsForm } from 'components/forms'
 import CardCredit from 'components/cards/credit'
 import { getLang } from 'utils/lang'
+import { card_types } from 'config'
 
 class Credits extends Component {
 	constructor() {
@@ -26,10 +27,26 @@ class Credits extends Component {
 	componentWillMount() {
 		store.dispatch(getCredits())
 		store.dispatch(getBundles())
+		store.dispatch(getCreditCards())
 	}
 
 	openModal = () => {
 		store.dispatch(toggleModal(true, SendCreditsForm, 'modal-md'))
+	}
+
+	buyCredits = () => {
+		const { default_card } = this.props.user
+		const data = {
+			amount: this.state.count,
+			first_name: 'test',
+			last_name: '',
+			card_number: default_card.card_number,
+			expiry_year: default_card.validity_year,
+			expiry_month: default_card.validity_month,
+			cvv: default_card.cvv,
+			card_brand: card_types.find(item => item.pattern.test(default_card.card_number)) ? card_types.find(item => item.pattern.test(default_card.card_number)).name : ''
+		}
+		store.dispatch(buyCredits(data))
 	}
 
 	printCreditsCard = (item, i) => <div key={i} className="col-xl-4 col-md-6 mb-3"><CardCredit {...item} /></div>
@@ -72,6 +89,7 @@ class Credits extends Component {
 		        				title="Adicionar ao carrinho" />
 		    				<BtnMain
 		        				className="btn-block font-weight-bold"
+		        				onClick={this.buyCredits}
 		        				title="Comprar agora" />
 						</div>
 					</div>
@@ -122,7 +140,8 @@ const mapStateToProps = state =>
         user: {
         	credits: state.user.credits,
         	dollar_value: state.user.dollar_value,
-        	credits_bundles: state.user.credits_bundles
+        	credits_bundles: state.user.credits_bundles,
+        	default_card: state.user.default_card
         }
     })
 
