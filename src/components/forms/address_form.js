@@ -8,6 +8,7 @@ import Input from 'components/inputs/input'
 import { format } from 'utils/mask'
 import CheckBox from 'components/inputs/checkbox'
 import { getLang } from 'utils/lang'
+import Validator from 'utils/validator'
 
 class AddressForm extends Component {
 
@@ -21,33 +22,34 @@ class AddressForm extends Component {
 
     save = () => {
         if (this.state.activeSave) {
-            const data = {
-                id: history.location.state ? history.location.state.id : '',
-                title: this.address.title.value,
-                recipient_first_name: this.address.first_name.value,
-                recipient_last_name: this.address.last_name.value,
-                recipient_phone: this.address.phone.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
-                recipient_cellphone: this.address.celular.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
-                street: this.address.street.value,
-                number: this.address.number.value,
-                zipcode: this.address.cep.value.replace('-', ''),
-                complement: this.address.complement.value,
-                district: this.address.district.value,
-                city: this.address.city.value,
-                state: this.address.state.value,
-                country: this.address.country.value
+            if (Validator.isValid()) {
+                const data = {
+                    id: history.location.state ? history.location.state.id : '',
+                    title: this.address.title.value,
+                    recipient_first_name: this.address.first_name.value,
+                    recipient_last_name: this.address.last_name.value,
+                    recipient_phone: this.address.phone.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
+                    recipient_cellphone: this.address.celular.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
+                    street: this.address.street.value,
+                    number: this.address.number.value,
+                    zipcode: this.address.cep.value.replace('-', ''),
+                    complement: this.address.complement.value,
+                    district: this.address.district.value,
+                    city: this.address.city.value,
+                    state: this.address.state.value,
+                    country: this.address.country.value
+                }
+                this.setState({activeSave: false})
+                if (data.id) {
+                    store.dispatch(updateAddress(data)).then(res => {
+                        history.push('/profile/address/')
+                    })
+                } else {
+                    store.dispatch(saveAddress(data)).then(res => {
+                        history.push('/profile/address/')
+                    })
+                }
             }
-            this.setState({activeSave: false})
-            if (data.id) {
-                store.dispatch(updateAddress(data)).then(res => {
-                    history.push('/profile/address/')
-                })
-            } else {
-                store.dispatch(saveAddress(data)).then(res => {
-                    history.push('/profile/address/')
-                })
-            }
-            
         } 
     }
 

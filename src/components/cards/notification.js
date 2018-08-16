@@ -20,12 +20,7 @@ class CardNotification extends Component {
 		})
 	}
 
-	sendThanks = () => {
-		//store.dispatch(sendThanks())
-	}
-
     render() {
-    	console.log(this.props.type)
     	const notify = {...NOTIFICATION_TYPE[this.props.type], desc: this.props.message}
         return (
         	<div className="rounded bg-white border p-3 mb-3">
