@@ -1,11 +1,21 @@
 class Validator {
-	static formFields = {}
-
-	static isValid = () => {
-		return Object.keys(this.a.formFields).every(item => this.a.formFields[item].valid === true)
+	static formFields = {
+		address: {},
+		card: {}
 	}
 
-	static setValue = (val, rules, name) => {
+	static isValid = formName => {
+		if (Object.keys(this.a.formFields[formName]).length) {
+			return Object.keys(this.a.formFields[formName]).every(item => this.a.formFields[formName][item].valid === true)
+		}
+		return false
+	}
+
+	static clear = formName => {
+		this.a.formFields[formName] = {}
+	}
+
+	static setValue = (val, rules, name, formName) => {
 		let valid = true
 		let message = ''
 		rules.forEach(item => {
@@ -18,7 +28,7 @@ class Validator {
 					break
 				case /min-\d/.test(item):
 					const [,min] = item.split('-')
-					if (min*1 > val.length) {
+					if (val && min*1 > val.length) {
 						valid = false
 						message = `está incorreto`
 					}
@@ -44,8 +54,7 @@ class Validator {
 				default: return
 			}
 		})
-
-		this.a.formFields[name] = {valid, message}
+		this.a.formFields[formName][name] = {valid, message}
 		return {valid, message}
 	}
 }

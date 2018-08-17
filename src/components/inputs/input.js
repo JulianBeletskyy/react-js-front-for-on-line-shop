@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import './input.css'
 import Validator from 'utils/validator'
 import { getLang } from 'utils/lang'
 
 class Input extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.input = null
         this.obj = {
             valid: true,
@@ -25,7 +26,7 @@ class Input extends Component {
             this.props.onChange(value)
         }
         if (this.props.validation && this.input) {
-            this.obj = Validator.setValue(this.input.value, this.props.validation, this.props.label)
+            this.obj = Validator.setValue(this.input.value, this.props.validation, this.props.label, this.formName)
         }
         this.setState({value})
     }
@@ -38,16 +39,15 @@ class Input extends Component {
     }
 
     componentDidMount() {
+        this.formName = ReactDOM.findDOMNode(this).parentNode.closest('form').name
         if (this.props.validation) {
-            this.obj = Validator.setValue(this.props.value, this.props.validation, this.props.label)
+            this.obj = Validator.setValue(this.props.value, this.props.validation, this.props.label, this.formName)
         }
     }
 
     handleFocus = ({target: {value}}) => {
         this.firstTime = true
     }
-
-    
 
     isValid = () => this.props.checking && this.props.validation && !this.obj.valid && this.firstTime
 
@@ -73,11 +73,11 @@ class Input extends Component {
                     {
                         this.props.required
                         ?   <sup style={{color: '#70C49C'}}><small>&#9733;</small></sup>
-                        :   ''
+                        :   null
                     }{
                         this.props.description
                         ?   <span style={{color: '#70C49C'}}> ({this.props.description})</span>
-                        :   ''
+                        :   null
                     }
                     <input 
                         type={type}

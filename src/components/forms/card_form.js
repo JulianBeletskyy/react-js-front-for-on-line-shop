@@ -3,7 +3,7 @@ import { history } from 'store'
 import Input from 'components/inputs/input'
 import { format } from 'utils/mask'
 import { getLang } from 'utils/lang'
-import { card_types } from 'config'
+import Validator from 'utils/validator'
 
 class CardForm extends Component {
 
@@ -20,15 +20,17 @@ class CardForm extends Component {
         this.card[field].value = format(mask, val)
     }
 
-    getCardBrand = (card) => {
-       return card_types.find(item => item.pattern.test(card.card_number)) ? card_types.find(item => item.pattern.test(card.card_number)).name : ''
+    componentWillUnmount() {
+        Validator.clear('card')
     }
 
     render() {
         const card = history.location.state || {}
+        card.card_number = card.card_number ? format('card', card.card_number) : ''
+        card.validity_month = card.validity_year && card.validity_month ? format('dd/mm', `${card.validity_month}${card.validity_year}`) : ''
         
         return (
-        	<form onChange={this.props.onChange(this.card)}>
+        	<form name="card" onChange={this.props.onChange(this.card)}>
                 <Input 
                     required
                     checking={this.state.checkingForm}
@@ -51,7 +53,7 @@ class CardForm extends Component {
                     checking={this.state.checkingForm}
                     validation={['required', '9999.9999.9999.9999']}
                     label={getLang("Número do cartão")}
-                    value={format('card', card.card_number)}
+                    value={card.card_number}
 
                     onChange={this.checkMask('card', 'card_number')}
                     inputRef={ref => this.card.card_number = ref} />
@@ -63,7 +65,7 @@ class CardForm extends Component {
                             validation={['required', '99/99']}
                             label={getLang("Validate")}
                             placeholder="DD/MM"
-                            value={format('dd/mm', `${card.validity_month}${card.validity_year}`)}
+                            value={card.validity_month}
                             onChange={this.checkMask('dd/mm', 'validity_month')}
                             inputRef={ref => this.card.validity_month = ref} />
                     </div>

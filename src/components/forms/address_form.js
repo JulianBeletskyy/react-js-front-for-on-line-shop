@@ -77,6 +77,10 @@ class AddressForm extends Component {
         this.address[field].value = format(mask, val)
     }
 
+    componentWillUnmount() {
+        Validator.clear('address')
+    }
+
     render() {
         const address = history.location.state || this.props.cart.guestAddress
         if (Object.keys(address)) {
@@ -85,8 +89,10 @@ class AddressForm extends Component {
             address.recipient_cellphone = address.recipient_cellphone ? format('phone', address.recipient_cellphone) : ''
         }
 
+        const { onChangeForm = () => {}, onCardForm = false } = this.props
+
         return (
-        	<div>
+        	<form name="address" onChange={onChangeForm(this.address)}>
                 <Input 
                     required
                     checking={this.state.checkingForm}
@@ -187,6 +193,9 @@ class AddressForm extends Component {
                     <div className="col-sm-6">
                         <Input 
                             required
+                            checking={this.state.checkingForm}
+                            validation={['required']}
+                            onChange={this.checkMask('all', 'city')}
                             label={getLang("Cidade")}
                             value={address.city}
                             inputRef={ref => this.address.city = ref} />
@@ -194,7 +203,10 @@ class AddressForm extends Component {
                     <div className="col-sm-6">
                         <Input 
                             required
+                            checking={this.state.checkingForm}
+                            validation={['required']}
                             label={getLang("Bairro")}
+                            onChange={this.checkMask('all', 'district')}
                             value={address.district}
                             inputRef={ref => this.address.district = ref} />
                     </div>
@@ -216,24 +228,27 @@ class AddressForm extends Component {
                                 <BtnMain
                                     className="font-weight-bold btn-outline btn-block"
                                     onClick={this.saveAsGuest}
+                                    disabled={!Validator.isValid('address')}
                                     title="Continuar" />
                             </div>
                         </div>
-                    :   <div className="row">
-                            <div className="col-sm-8 offset-sm-2">
-                                <BtnMain
-                                    className="font-weight-bold btn-outline btn-block"
-                                    onClick={this.props.onCancel}
-                                    title="Cancelar" />
-                                <BtnMain
-                                    disabled={!Validator.isValid()}
-                                    className="font-weight-bold btn-block"
-                                    onClick={this.save}
-                                    title="Salvar" />
+                    :   onCardForm
+                        ?   null
+                        :   <div className="row">
+                                <div className="col-sm-8 offset-sm-2">
+                                    <BtnMain
+                                        className="font-weight-bold btn-outline btn-block"
+                                        onClick={this.props.onCancel}
+                                        title="Cancelar" />
+                                    <BtnMain
+                                        disabled={!Validator.isValid('address')}
+                                        className="font-weight-bold btn-block"
+                                        onClick={this.save}
+                                        title="Salvar" />
+                                </div>
                             </div>
-                        </div>
                 }
-			</div>
+			</form>
         );
     }
 }

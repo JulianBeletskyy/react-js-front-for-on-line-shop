@@ -1,17 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store, { history } from 'store'
-import BtnMain from 'components/buttons/btn_main.js'
-import CheckBox from 'components/inputs/checkbox.js'
+import BtnMain from 'components/buttons/btn_main'
+import CheckBox from 'components/inputs/checkbox'
 import { ProfileForm, AddressForm, CardForm, PasswordForm } from 'components/forms'
-import { saveCard } from 'actions/user'
+import { saveCard, saveAddress } from 'actions/user'
 import { getLang } from 'utils/lang'
 import Validator from 'utils/validator'
 
 class Edit extends Component {
 	state = {
     	showAddressForm: false,
-    	cardDataUpdate: false
+    	cardDataUpdate: false,
+    	addressDataUpdate: false
     }
 
 	toggleAddressForm = ({target: {checked}}) => {
@@ -31,9 +32,32 @@ class Edit extends Component {
     	this.setState({cardDataUpdate: true})
     }
 
+    getAddressData = fields => e => {
+    	this.addressData = {
+            title: fields.title.value,
+            recipient_first_name: fields.first_name.value,
+            recipient_last_name: fields.last_name.value,
+            recipient_phone: fields.phone.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
+            recipient_cellphone: fields.celular.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
+            street: fields.street.value,
+            number: fields.number.value,
+            zipcode: fields.cep.value.replace('-', ''),
+            complement: fields.complement.value,
+            district: fields.district.value,
+            city: fields.city.value,
+            state: fields.state.value,
+            country: fields.country.value
+        }
+    	this.setState({addressDataUpdate: true})
+    }
+
     saveCard = () => {
     	store.dispatch(saveCard(this.cardData)).then(res => {
-    		history.goBack()
+    		if (this.state.showAddressForm) {
+    			store.dispatch(saveAddress(this.addressData)).then(res => {
+                    history.goBack()
+                })
+    		}
     	})
     }
 
@@ -75,9 +99,9 @@ class Edit extends Component {
 									<div>{getLang('É o mesmo endereço de entrega?')}</div>
 									<div><CheckBox onChange={this.toggleAddressForm} /></div>
 								</div>
-								{this.state.showAddressForm ? <AddressForm /> : ''}
+								{this.state.showAddressForm ? <AddressForm onCardForm={true} onChangeForm={this.getAddressData} /> : null}
 							</div>		
-						: 	''
+						: 	null
 					}
 					<div className="col-lg-8">
 						{
@@ -90,12 +114,12 @@ class Edit extends Component {
 				                            title="Cancelar" />
 				                        <BtnMain
 				                            className="font-weight-bold btn-block"
-				                            disabled={!Validator.isValid()}
+				                            disabled={this.state.showAddressForm ? (!Validator.isValid('card') || !Validator.isValid('address')) : !Validator.isValid('card')}
 				                            onClick={this.saveCard}
 				                            title="Salvar" />
 				                    </div>
 				                </div>
-							: 	''
+							: 	null
 							
 						}
 					</div>
