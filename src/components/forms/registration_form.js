@@ -46,8 +46,8 @@ class RegistrationForm extends Component {
         this.setState({email: !this.state.email})
     }
 
-    checkMask = (mask, field) => e => {
-        this.auth[field].value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.auth[field].value = format(mask, val)
     }
 
     render() {

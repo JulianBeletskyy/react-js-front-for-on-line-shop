@@ -10,8 +10,8 @@ class About extends Component {
 		disabled: true
 	}
 
-	checkMask = (mask, field) => e => {
-        this.phone.value = format(mask, e.target.value)
+	checkMask = (mask, field) => val => {
+        this.phone.value = format(mask, val)
         this.setState({disabled: this.phone ? this.phone.value.length < 14 : true})
     }
 

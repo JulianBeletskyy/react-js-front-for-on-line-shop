@@ -6,14 +6,16 @@ import CheckBox from 'components/inputs/checkbox.js'
 import { ProfileForm, AddressForm, CardForm, PasswordForm } from 'components/forms'
 import { saveCard } from 'actions/user'
 import { getLang } from 'utils/lang'
+import Validator from 'utils/validator'
 
 class Edit extends Component {
 	state = {
-    	showAddressForm: false
+    	showAddressForm: false,
+    	cardDataUpdate: false
     }
 
-	toggleAddressForm = e => {
-    	this.setState({showAddressForm: e.target.checked})
+	toggleAddressForm = ({target: {checked}}) => {
+    	this.setState({showAddressForm: checked})
     }
 
     getCardData = fields => e => {
@@ -26,6 +28,7 @@ class Edit extends Component {
     		validity_month: m,
     		validity_year: y,
     	}
+    	this.setState({cardDataUpdate: true})
     }
 
     saveCard = () => {
@@ -87,6 +90,7 @@ class Edit extends Component {
 				                            title="Cancelar" />
 				                        <BtnMain
 				                            className="font-weight-bold btn-block"
+				                            disabled={!Validator.isValid()}
 				                            onClick={this.saveCard}
 				                            title="Salvar" />
 				                    </div>

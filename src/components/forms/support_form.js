@@ -13,8 +13,8 @@ class SupportForm extends Component {
         this.support = {}
     }
 
-    checkMask = (mask, field) => e => {
-        this.support[field].value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.support[field].value = format(mask, val)
     }
 
     sendSupport = () => {

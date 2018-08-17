@@ -15,8 +15,8 @@ class CardForm extends Component {
         this.card = {}
     }
 
-    checkMask = (mask, field) => e => {
-        this.card[field].value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.card[field].value = format(mask, val)
     }
 
     saveCard = () => {

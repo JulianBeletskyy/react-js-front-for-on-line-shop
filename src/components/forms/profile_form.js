@@ -26,8 +26,8 @@ class ProfileForm extends Component {
         })
     }
 
-    checkMask = (mask, field) => e => {
-        this.user[field].value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.user[field].value = format(mask, val)
     }
 
     render() {

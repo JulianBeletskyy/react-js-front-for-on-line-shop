@@ -16,39 +16,38 @@ class AddressForm extends Component {
         super(props)
         this.address = {}
         this.state = {
-            activeSave: true
+            activeSave: true,
+            checkingForm: false
         }
     }
 
     save = () => {
         if (this.state.activeSave) {
-            if (Validator.isValid()) {
-                const data = {
-                    id: history.location.state ? history.location.state.id : '',
-                    title: this.address.title.value,
-                    recipient_first_name: this.address.first_name.value,
-                    recipient_last_name: this.address.last_name.value,
-                    recipient_phone: this.address.phone.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
-                    recipient_cellphone: this.address.celular.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
-                    street: this.address.street.value,
-                    number: this.address.number.value,
-                    zipcode: this.address.cep.value.replace('-', ''),
-                    complement: this.address.complement.value,
-                    district: this.address.district.value,
-                    city: this.address.city.value,
-                    state: this.address.state.value,
-                    country: this.address.country.value
-                }
-                this.setState({activeSave: false})
-                if (data.id) {
-                    store.dispatch(updateAddress(data)).then(res => {
-                        history.push('/profile/address/')
-                    })
-                } else {
-                    store.dispatch(saveAddress(data)).then(res => {
-                        history.push('/profile/address/')
-                    })
-                }
+            const data = {
+                id: history.location.state ? history.location.state.id : '',
+                title: this.address.title.value,
+                recipient_first_name: this.address.first_name.value,
+                recipient_last_name: this.address.last_name.value,
+                recipient_phone: this.address.phone.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
+                recipient_cellphone: this.address.celular.value.replace('(', '').replace(')', '').replace(' ', '').replace('-', ''),
+                street: this.address.street.value,
+                number: this.address.number.value,
+                zipcode: this.address.cep.value.replace('-', ''),
+                complement: this.address.complement.value,
+                district: this.address.district.value,
+                city: this.address.city.value,
+                state: this.address.state.value,
+                country: this.address.country.value
+            }
+            this.setState({activeSave: false})
+            if (data.id) {
+                store.dispatch(updateAddress(data)).then(res => {
+                    history.push('/profile/address/')
+                })
+            } else {
+                store.dispatch(saveAddress(data)).then(res => {
+                    history.push('/profile/address/')
+                })
             }
         } 
     }
@@ -73,14 +72,15 @@ class AddressForm extends Component {
         this.props.onCancel()
     }
 
-    checkMask = (mask, field) => e => {
-        this.address[field].value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.setState({checkingForm: true})
+        this.address[field].value = format(mask, val)
     }
 
     render() {
         const address = history.location.state || this.props.cart.guestAddress
-        if (Object.keys(address).length) {
-            address.zipcode = format('cep', address.zipcode)
+        if (Object.keys(address)) {
+            address.zipcode = address.zipcode ? format('cep', address.zipcode) : ''
             address.recipient_phone = address.recipient_phone ? format('cellphone', address.recipient_phone) : ''
             address.recipient_cellphone = address.recipient_cellphone ? format('phone', address.recipient_cellphone) : ''
         }
@@ -89,6 +89,8 @@ class AddressForm extends Component {
         	<div>
                 <Input 
                     required
+                    checking={this.state.checkingForm}
+                    validation={['required']}
                     label={getLang("Nome de endereço")}
                     description={getLang("ex: minha casa, meu trabalho")}
                     value={address.title}
@@ -96,12 +98,16 @@ class AddressForm extends Component {
                     inputRef={ref => this.address.title = ref} />
                 <Input 
                     required
+                    checking={this.state.checkingForm}
+                    validation={['required']}
                     label={getLang("Nome")}
                     value={address.recipient_first_name}
                     onChange={this.checkMask('alphabet', 'first_name')}
                     inputRef={ref => this.address.first_name = ref} />
                 <Input 
                     required
+                    checking={this.state.checkingForm}
+                    validation={['required']}
                     label={getLang("Sobrenome")}
                     value={address.recipient_last_name}
                     onChange={this.checkMask('alphabet', 'last_name')}
@@ -126,19 +132,26 @@ class AddressForm extends Component {
                 </div>
                 <Input 
                     required
+                    checking={this.state.checkingForm}
+                    validation={['required', '99999-999']}
                     label={getLang("CEP")}
                     value={address.zipcode}
                     onChange={this.checkMask('cep', 'cep')}
                     inputRef={ref => this.address.cep = ref} />
                 <Input 
                     required
+                    checking={this.state.checkingForm}
+                    validation={['required']}
                     label={getLang("Endereço")}
+                    onChange={this.checkMask('all', 'street')}
                     value={address.street}
                     inputRef={ref => this.address.street = ref} />
                 <div className="row">
                     <div className="col-sm-6">
                         <Input 
                             required
+                            checking={this.state.checkingForm}
+                            validation={['required']}
                             label={getLang("Número")}
                             value={address.number}
                             onChange={this.checkMask('digits', 'number')}
@@ -154,6 +167,8 @@ class AddressForm extends Component {
                     <div className="col-sm-6">
                         <Input 
                             required
+                            checking={this.state.checkingForm}
+                            validation={['required']}
                             label={getLang("País")}
                             value={address.country}
                             onChange={this.checkMask('alphabet', 'country')}
@@ -162,6 +177,8 @@ class AddressForm extends Component {
                     <div className="col-sm-6">
                         <Input 
                             required
+                            checking={this.state.checkingForm}
+                            validation={['required']}
                             label={getLang("Estado")}
                             value={address.state}
                             onChange={this.checkMask('alphabet', 'state')}
@@ -209,6 +226,7 @@ class AddressForm extends Component {
                                     onClick={this.props.onCancel}
                                     title="Cancelar" />
                                 <BtnMain
+                                    disabled={!Validator.isValid()}
                                     className="font-weight-bold btn-block"
                                     onClick={this.save}
                                     title="Salvar" />

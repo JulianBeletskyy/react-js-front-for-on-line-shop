@@ -12,8 +12,8 @@ import { getLang } from 'utils/lang'
 
 class StepSecond extends Component {
     
-    checkMask = (mask, field) => e => {
-        this.cvv.value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.cvv.value = format(mask, val)
     }
 
     changeBilling = () => {

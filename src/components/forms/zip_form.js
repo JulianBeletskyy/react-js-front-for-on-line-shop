@@ -13,8 +13,8 @@ class ZipForm extends Component {
         this.props.openAnother('login')
     }
 
-    checkMask = (mask, field) => e => {
-        this[field].value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this[field].value = format(mask, val)
     }
 
     search = () => {

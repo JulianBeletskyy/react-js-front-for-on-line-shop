@@ -19,8 +19,8 @@ class StepThird extends Component {
         }
     }
 
-    checkMask = (mask, field) => e => {
-        this.cvv.value = format(mask, e.target.value)
+    checkMask = (mask, field) => val => {
+        this.cvv.value = format(mask, val)
     }
 
     getCardNumber = num => `****.****.****.${num.slice(-4)}`
