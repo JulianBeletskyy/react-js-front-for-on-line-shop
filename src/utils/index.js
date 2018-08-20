@@ -77,6 +77,7 @@ const handleSwipe = e => {
         if ( xDiff > 0 ) {
             /* left swipe */ 
         } else {
+            /* right swipe */
             store.dispatch(toggleSideMenu(false))
         }                       
     } else {
