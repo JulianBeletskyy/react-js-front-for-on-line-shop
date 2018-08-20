@@ -26,7 +26,7 @@ class Input extends Component {
             this.props.onChange(value)
         }
         if (this.props.validation && this.input) {
-            this.obj = Validator.setValue(this.input.value, this.props.validation, this.props.label, this.formName)
+            this.obj = Validator.setValue(this.input.value, this.props.validation, this.props.label, this.formName.name)
         }
         this.setState({value})
     }
@@ -39,9 +39,9 @@ class Input extends Component {
     }
 
     componentDidMount() {
-        this.formName = ReactDOM.findDOMNode(this).parentNode.closest('form').name
-        if (this.props.validation) {
-            this.obj = Validator.setValue(this.props.value, this.props.validation, this.props.label, this.formName)
+        this.formName = ReactDOM.findDOMNode(this).parentNode.closest('form')
+        if (this.props.validation && this.formName) {
+            this.obj = Validator.setValue(this.props.value, this.props.validation, this.props.label, this.formName.name)
         }
     }
 
