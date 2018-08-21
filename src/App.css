@@ -565,6 +565,9 @@ path.cls-8 {
 	.about-wrap {
 		background-size: 68%;
 	}
+	.telephone {
+		height: 100%;
+	}
 }
 
 @media(max-width: 1440px) {
