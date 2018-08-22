@@ -40,7 +40,7 @@ class Avatar extends Component {
         const image = this.props.image ? this.props.image : (this.state.preview ? this.state.preview : '')
         const { defaultImg = "/assets/images/default-reviewer.png", edit = true } = this.props
         return (
-        	<div id="wrap" className={`${edit ? 'pointer' : ''} position-relative wrap-avatar ${this.props.className}`} onClick={this.openUpload} ref={ref => this.wrap = ref} style={{height: '100%'}}>
+        	<div id="wrap" className={`${edit ? 'pointer' : ''} position-relative wrap-avatar ${this.props.className}`} onClick={this.openUpload} ref={ref => this.wrap = ref}>
                 <input type="file" id="upload" ref={ref => this.uploadField = ref} onChange={this.onChange} className="d-none" />
 	            <img className="rounded img-fluid" style={{opacity: this.state.opacity}} src={defaultImg} alt="" />
         		<img onLoad={this.handleOnLoad} className="rounded img-fluid d-none" src={image} alt="" />
@@ -53,7 +53,7 @@ class Avatar extends Component {
                                 <i className="fas fa-camera"></i>
                             </div>
                         </div>
-                    :   ''
+                    :   null
                 } 
 			</div>
         );

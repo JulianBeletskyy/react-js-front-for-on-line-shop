@@ -60,7 +60,6 @@ class App extends Component {
                             </div>
                             <SideMenu />
                             <LeftMenu />
-                            
                             <Alert />
                             <Viewer />
                         </div>
