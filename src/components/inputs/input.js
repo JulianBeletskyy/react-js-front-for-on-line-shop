@@ -58,6 +58,7 @@ class Input extends Component {
             type = 'text',
             readonly = false,
             checking = false,
+            maxlength = null,
             onChange,
             inputRef,
             onKeyDown,
@@ -81,6 +82,7 @@ class Input extends Component {
                     }
                     <input 
                         type={type}
+                        maxLength={maxlength}
                         readOnly={readonly}
                         disabled={disabled}
                         placeholder={placeholder}

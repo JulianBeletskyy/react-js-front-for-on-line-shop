@@ -72,7 +72,8 @@ class Category extends Component {
 
     render() {
     	const category = this.props.categories.active_category || {}
-    	const { items } = this.props[this.props.match.params.type].pagination
+    	const { items, total_items = 0 } = this.props[this.props.match.params.type].pagination
+
         return (
         	<div className="bg-main font-avenir py-4">
         		<div className="container">
@@ -87,7 +88,7 @@ class Category extends Component {
     	            			<h5><small>{getLang('Pesquisa')}: </small>{getLang(category.name)}</h5>
                                 <div className="d-none d-sm-block"><DropDown onClickItem={this.changeOrder} list={DROP_LIST} /></div>
                             </div>
-
+                            <div className="color-grey">{`${total_items} ${getLang('resultados')}`}</div>
                             <div className="mb-3 d-sm-none">
                                 <span className="color-green mr-4 pointer" onClick={this.showMenu('order')}>
                                     <img src="/assets/icons/order-icon.png" alt="" className="img-fluid small-icon" />

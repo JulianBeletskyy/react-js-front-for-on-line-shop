@@ -8,7 +8,6 @@ import { getVendorServices } from 'actions/services'
 import { addToWishList, removeFromWishList } from 'actions'
 import { calcDelivery } from 'actions/user'
 import ImageMultiPreview from 'components/images/multi_preview'
-import ImagePreview from 'components/images/preview'
 import Price from 'components/price'
 import Stars from 'components/stars'
 import Counter from 'components/counter'
@@ -122,7 +121,7 @@ class Product extends Component {
 									<div className="color-grey pl-sm-3">{item.answer}</div>
 								</div>
 							</div>
-						: 	''
+						: 	null
 					}
 					<div className="border-bottom mb-3"></div>
 				</div>
@@ -358,7 +357,7 @@ class Product extends Component {
 		            					content: <div className="p-3"><SalonInfo {...salon} hide={vendor_services.length} /></div>
 		            				}, {
 		            					title: getLang('Produtos'),
-		            					content: <div className="p-3"><MainList type="product" itemType="small" /></div>
+		            					content: <div className="p-3"><MainList type="product" itemType="small" pagination={true} /></div>
 		            				}, {
 		            					title: getLang('Serviços'),
 		            					hide: !vendor_services.length,

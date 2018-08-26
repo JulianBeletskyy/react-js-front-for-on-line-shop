@@ -60,6 +60,10 @@ class Wishlist extends Component {
 
 		const list = this.props.user.wishlist[this.state.active] || []
 		const page = `${this.state.active}Page`
+		if (list.length <= 8 && this.state[page] !== 1) {
+			this.setState({[page]: 1})
+		}
+
         return (
         	<div>
 	    		<div className="row">

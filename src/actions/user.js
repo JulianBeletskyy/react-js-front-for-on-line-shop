@@ -276,10 +276,11 @@ export const sendSupport = data => dispatch =>
 export const loadOrder = url => dispatch =>
     (
         loadPDF(url).then(blob => {
+            console.log(url)
             if (blob) {
                 return new Blob([blob], {type: 'application/pdf'})
             }   
-            
+            return false
         })
     )
 

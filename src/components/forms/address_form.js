@@ -95,6 +95,7 @@ class AddressForm extends Component {
         	<form name="address" onChange={onChangeForm(this.address)}>
                 <Input 
                     required
+                    maxlength={20}
                     checking={this.state.checkingForm}
                     validation={['required']}
                     label={getLang("Nome de endereço")}

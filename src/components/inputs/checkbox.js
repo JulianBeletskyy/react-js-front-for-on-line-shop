@@ -13,12 +13,14 @@ class CheckBox extends Component {
     }
 
     render() {
+        const { value, inputRef, onChange = () => {} } = this.props
+
     	const horizontalText = this.props.vertical ? <span>&nbsp;</span> : this.props.title
     	const verticalText = this.props.vertical ? this.props.title : ''
         
         return (
             <label className="checkbox">
-                <input type="checkbox" checked={this.props.value} onChange={e => this.props.onChange(e)} ref={this.props.inputRef} />
+                <input type="checkbox" checked={value} onChange={e => onChange(e)} ref={inputRef} />
                 <div className="checkbox__text">{horizontalText}</div>
                 <div className="text-center">{verticalText}</div>
             </label>

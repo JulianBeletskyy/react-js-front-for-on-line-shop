@@ -153,7 +153,6 @@ class Company extends Component {
     }
 
     isOpen = () => {
-        let day = {}
         let from, to
         switch (new Date().getDay()) {
             case 1: [{from, to}] = this.props.services.salon.working_hours.monday && this.props.services.salon.working_hours.monday.length

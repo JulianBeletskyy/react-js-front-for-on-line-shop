@@ -3,6 +3,8 @@ import Cookies from 'js-cookie'
 import * as types from './types.js'
 import { history } from 'store'
 import { setAlert } from 'actions/design'
+import { setUserKey } from 'actions/user'
+import { getLocation } from 'actions'
 
 export const loginAsGuest = redirect => dispatch => 
     (
@@ -10,6 +12,7 @@ export const loginAsGuest = redirect => dispatch =>
             if (json.apikey) {
                 dispatch(setToken(json.apikey.key, true))
                 dispatch(setUser(json.user))
+                dispatch(setUserKey({lat: 0, lng: 0}, 'location'))
                 if (redirect) {
                     history.push('/')
                 }
@@ -27,6 +30,9 @@ export const login = data => dispatch =>
             if (json.apikey) {
                 dispatch(setToken(json.apikey.key, false))
                 dispatch(setUser(json.user))
+                if (json.user.main_address.zipcode) {
+                    dispatch(getLocation(json.user.main_address.zipcode))
+                }
                 return true
             }
         })
@@ -67,6 +73,9 @@ export const keepToken = () => dispatch =>
             if (json.apikey) {
                 dispatch(setToken(json.apikey.key, json.user.first_name === 'Guest'))
                 dispatch(setUser(json.user))
+                if (json.user.first_name !== 'Guest' && json.user.main_address.zipcode) {
+                    dispatch(getLocation(json.user.main_address.zipcode))
+                }
             }
         })
         .catch(error => {

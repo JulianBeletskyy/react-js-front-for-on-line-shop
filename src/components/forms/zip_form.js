@@ -13,8 +13,8 @@ class ZipForm extends Component {
         this.props.openAnother('login')
     }
 
-    checkMask = (mask, field) => val => {
-        this[field].value = format(mask, val)
+    checkMask = (mask, field) => ({target: {value}}) => {
+        this[field].value = format(mask, value)
     }
 
     search = () => {
@@ -68,7 +68,7 @@ class ZipForm extends Component {
                                 </div>
                             </div>
                         </div>
-                    :   ''
+                    :   null
                 }
                     
             	<div className="d-flex align-items-center mb-4">
@@ -102,7 +102,7 @@ class ZipForm extends Component {
                                     onClick={this.nearbySearch}
                                     title="Utilizar a minha localização" />
                         </div>
-                    :   ''
+                    :   null
                 }
 			</div>
         );

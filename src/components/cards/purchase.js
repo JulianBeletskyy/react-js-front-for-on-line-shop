@@ -21,14 +21,16 @@ class CardPurchase extends Component {
 		const [last, ...other] = this.props.receipts[0].receipt.split('/').reverse()
 		store.dispatch(loadOrder(this.props.receipts[0].receipt))
 		.then(blob => {
-			const data = window.URL.createObjectURL(blob)
-			const link = document.createElement('a')
-			link.href = data
-			link.download = last
-			link.click()
-			setTimeout(() => {
-				window.URL.revokeObjectURL(data)
-			}, 100)
+			if (blob) {
+				const data = window.URL.createObjectURL(blob)
+				const link = document.createElement('a')
+				link.href = data
+				link.download = last
+				link.click()
+				setTimeout(() => {
+					window.URL.revokeObjectURL(data)
+				}, 100)
+			}
 		})
 	}
 

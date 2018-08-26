@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import store from 'store'
 import { connect } from 'react-redux'
-import { getProducts } from 'actions/products.js'
-import { getServices } from 'actions/services.js'
-import CardProduct from 'components/cards/product.js'
-import CardService from 'components/cards/service.js'
+import { getProducts } from 'actions/products'
+import { getServices } from 'actions/services'
+import CardProduct from 'components/cards/product'
+import CardService from 'components/cards/service'
+import Pagination from 'components/pagination'
 
 class ListMain extends Component {
-
+    
     isEmptyData = data => ! data.length
 
     getData = type => {
         switch (type) {
             case 'product':
-                store.dispatch(getProducts('list', {page_size: 6}))
+                store.dispatch(getProducts('pagination', {new_pagination: true, page_size: 6}))
                 break
             case 'service':
-                store.dispatch(getServices('list', {page_size: 6}))
+                store.dispatch(getServices('pagination', {new_pagination: true, page_size: 6}))
                 break
             default: return
         }
@@ -30,6 +31,10 @@ class ListMain extends Component {
         if (nextProps.user.guest !== this.props.user.guest) {
             this.getData(this.props.type)
         }
+    }
+
+    changePage = page => {
+        store.dispatch(getProducts('pagination', {new_pagination: true, page_size: 6, page: page}))
     }
 
     printList = (item, i) => {
@@ -50,10 +55,21 @@ class ListMain extends Component {
     }
 
     render() {
-        const list = this.props[this.props.type].list
+        const { items, total_pages, page } = this.props[this.props.type].pagination
         return (
             <div className="row">
-               { list.map((item, i) => this.printList(item, i)) }
+               { items.map((item, i) => this.printList(item, i)) }
+               { 
+                    this.props.pagination
+                    ?   <div className="d-flex justify-content-center w-100">
+                            <Pagination
+                                responsive={[{width: 1199, count: 10}, {width: 991, count: 7}, {width: 600, count: 6}, {width: 500, count: 5}, {width: 420, count: 4}, {width: 375, count: 3}]}
+                                onChange={this.changePage} 
+                                total={total_pages} 
+                                active={page} />
+                        </div>
+                    :   null
+               }
             </div>
         );
     }
@@ -62,13 +78,14 @@ class ListMain extends Component {
 const mapStateToProps = state =>
     ({
         user: {
-            guest: state.user.guest
+            guest: state.user.guest,
+            location: state.user.location
         },
         product: {
-            list: state.products.list
+            pagination: state.products.pagination,
         },
         service: {
-            list: state.services.list
+            pagination: state.services.pagination,
         }
     })
 

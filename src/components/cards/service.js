@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import store, { history } from 'store'
 import { addToCart } from 'actions/cart'
 import { addToWishList, removeFromWishList } from 'actions'
@@ -15,7 +16,6 @@ import { getLang } from 'utils/lang'
 class CardService extends Component {
 	state = {
 		active: false,
-		range: '0.0 km'
 	}
 
 	toggleCard = e => {
@@ -50,17 +50,9 @@ class CardService extends Component {
 		return `${address.title}, ${address.street}, ${address.city} - ${address.state}, ${address.zipcode}`
 	}
 
-	getDistance = () => {
-		let range = false
+	getDistance = (lat, lng) => {
 		const address = this.props.vendor.address || this.props.address
-		navigator.geolocation.getCurrentPosition(pos => {
-			range = getDistance(pos.coords.latitude, pos.coords.longitude, address.latitude, address.longitude)
-			if (this.mount && range) {
-				this.setState({
-					range: range
-				})
-			}
-		})
+		return getDistance(lat, lng, address.latitude, address.longitude)
 	}
 
 	addToScheduleCart = e => {
@@ -89,17 +81,13 @@ class CardService extends Component {
 		store.dispatch(removeFromWishList('service', this.props.id))
 	}
 
-	componentDidMount() {
-		this.getDistance()
-		this.mount = true
-	}
-
-	componentWillUnmount() {
-		this.mount = false
-	}
-
     render() {
     	const activeClass = this.state.active ? ' active' : ''
+    	const { location } = this.props.user
+    	let range = 0
+    	if (location.lat && location.lng) {
+    		range = this.getDistance(location.lat, location.lng)
+    	}
         return (
 	        	<div
 	        		className={`card rounded pointer h-100 service-card position-relative${activeClass}`} 
@@ -111,7 +99,7 @@ class CardService extends Component {
 			            	<div className="position-relative mb-3">
 			            		<img className="rounded img-fluid" src="/assets/images/default-image.png" alt="" />
 			            		<div className="range-stripe">
-			            			{this.state.range}
+			            			{`${range} km`}
 			            		</div>
 			            	</div>
 			            	<div className="mb-2">
@@ -172,4 +160,13 @@ class CardService extends Component {
     }
 }
 
-export default CardService
+const mapStateToProps = state =>
+    ({
+        user: {
+            location: state.user.location
+        }
+    })
+
+export default connect(
+    mapStateToProps
+)(CardService)

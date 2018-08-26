@@ -10,7 +10,7 @@ import Validator from 'utils/validator'
 
 class Edit extends Component {
 	state = {
-    	showAddressForm: false,
+    	showAddressForm: true,
     	cardDataUpdate: false,
     	addressDataUpdate: false
     }
@@ -53,11 +53,13 @@ class Edit extends Component {
 
     saveCard = () => {
     	store.dispatch(saveCard(this.cardData)).then(res => {
-    		if (this.state.showAddressForm) {
+            if (this.state.showAddressForm) {
     			store.dispatch(saveAddress(this.addressData)).then(res => {
                     history.goBack()
                 })
-    		}
+    		} else {
+                history.goBack()
+            }
     	})
     }
 
@@ -97,7 +99,7 @@ class Edit extends Component {
 						? 	<div className="rounded p-4 bg-white border mb-3 col-lg-8">
 								<div className="d-flex justify-content-between align-items-center color-grey">
 									<div>{getLang('É o mesmo endereço de entrega?')}</div>
-									<div><CheckBox onChange={this.toggleAddressForm} /></div>
+									<div><CheckBox onChange={this.toggleAddressForm} value={this.state.showAddressForm} /></div>
 								</div>
 								{this.state.showAddressForm ? <AddressForm onCardForm={true} onChangeForm={this.getAddressData} /> : null}
 							</div>		
