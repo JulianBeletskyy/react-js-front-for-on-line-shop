@@ -6,6 +6,7 @@ import BtnMain from 'components/buttons/btn_main'
 import Input from 'components/inputs/input'
 import SmallSwitch from 'components/inputs/small_switch'
 import { format } from 'utils/mask'
+import { getLang } from 'utils/lang'
 
 class RegistrationForm extends Component {
 
@@ -56,13 +57,12 @@ class RegistrationForm extends Component {
                 <div className={this.props.type === 'client' ? '' : 'd-none'}>
                     <Input 
                         required
-                        label="Name"
+                        label={getLang('Nome')}
                         value={''}
-                        
                         inputRef={ref => this.auth.first_name = ref} />
                     <Input 
                         required
-                        label="Sobrenome"
+                        label={getLang('Sobrenome')}
                         value={''}
                         inputRef={ref => this.auth.last_name = ref} />
                 </div>
@@ -88,7 +88,7 @@ class RegistrationForm extends Component {
                 <Input 
                     required
                     type="password"
-                    label="Senha"
+                    label={getLang('Senha')}
                     className="mb-5"
                     value={''}
                     inputRef={ref => this.auth.password = ref} />
@@ -96,13 +96,13 @@ class RegistrationForm extends Component {
                     className="mb-3"
                     onChange={this.toggleEmail} 
                     value={true}
-                    title="Desejo receber ofertas por e-mail"
+                    title={getLang('Desejo receber ofertas por e-mail')}
                     checked={this.state.email} />
                 <SmallSwitch
                     className="mb-3"
                     onChange={this.toggleTerms} 
                     value={true}
-                    title={<span>Li e concordo com os <span className="pointer color-green">Termos e Condições de Uso</span></span>}
+                    title={<span>{getLang('Li e concordo com os ')}<span className="pointer color-green">{getLang('Termos e Condições de Uso')}</span></span>}
                     checked={this.state.terms} />
                 <div className="row">
                     <div className="col-sm-10 offset-sm-1">

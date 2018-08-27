@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store, { history } from 'store'
-import { saveAddress, updateAddress } from 'actions/user'
+import { saveAddress, updateAddress, getUserAddresses } from 'actions/user'
 import { setGuestInfo } from 'actions/cart'
 import BtnMain from 'components/buttons/btn_main'
 import Input from 'components/inputs/input'
@@ -39,6 +39,9 @@ class AddressForm extends Component {
                 state: this.address.state.value,
                 country: this.address.country.value
             }
+            if (!this.props.user.data.addresses.length) {
+                data.default = true
+            }
             this.setState({activeSave: false})
             if (data.id) {
                 store.dispatch(updateAddress(data)).then(res => {
@@ -46,6 +49,7 @@ class AddressForm extends Component {
                 })
             } else {
                 store.dispatch(saveAddress(data)).then(res => {
+                    store.dispatch(getUserAddresses())
                     history.push('/profile/address/')
                 })
             }
@@ -82,7 +86,7 @@ class AddressForm extends Component {
     }
 
     render() {
-        const address = history.location.state || this.props.cart.guestAddress
+        const address = history.location.state || {...this.props.cart.guestAddress}
         if (Object.keys(address)) {
             address.zipcode = address.zipcode ? format('cep', address.zipcode) : ''
             address.recipient_phone = address.recipient_phone ? format('cellphone', address.recipient_phone) : ''
@@ -255,7 +259,8 @@ const mapStateToProps = state =>
     ({
         cart: {
             guestAddress: state.cart.guestAddress
-        }
+        },
+        user: state.user
     })
 
 export default connect(

@@ -60,7 +60,7 @@ class Wishlist extends Component {
 
 		const list = this.props.user.wishlist[this.state.active] || []
 		const page = `${this.state.active}Page`
-		if (list.length <= 8 && this.state[page] !== 1) {
+		if (list.length <= 6 && this.state[page] !== 1) {
 			this.setState({[page]: 1})
 		}
 
@@ -75,13 +75,13 @@ class Wishlist extends Component {
 	            	</div>
 	        	</div>
 	        	<div className="row">
-	        		{ list.slice((this.state[page] - 1) * 8, this.state[page] * 8).map((item, i) => this.printList(item, i)) }
+	        		{ list.slice((this.state[page] - 1) * 6, this.state[page] * 6).map((item, i) => this.printList(item, i)) }
 	            </div>
 	            {
-	            	list.length > 8
+	            	list.length > 6
 	            	? 	<Pagination 
 		                    onChange={this.changePage(page)} 
-		                    total={Math.ceil(list.length / 8)} 
+		                    total={Math.ceil(list.length / 6)} 
 		                    active={this.state[page]} />
                     : 	null
 	            }

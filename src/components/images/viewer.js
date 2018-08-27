@@ -4,6 +4,7 @@ import { toggleLightBox } from 'actions/design'
 import Lightbox from 'react-images'
 import { connect } from 'react-redux'
 import { LIGHTBOX_THEME } from 'config'
+import { getLang } from 'utils/lang'
 
 const keys = {37: 1, 38: 1, 39: 1, 40: 1};
 
@@ -64,7 +65,6 @@ class Viewer extends Component {
 		const { open, img, current, settings } = this.props.design.lightbox
 
 		open ? this.disableScroll() : this.enableScroll()
-
 		const defaultSettings = {
 			images: img,
 			isOpen: open,
@@ -77,6 +77,7 @@ class Viewer extends Component {
 			preventScroll: false,
 			enableKeyboardInput: false,
 			onClose: this.closeLightbox,
+			imageCountSeparator: getLang(' de '),
 			...settings
 		}
 

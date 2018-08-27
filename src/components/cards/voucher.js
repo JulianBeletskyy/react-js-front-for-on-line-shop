@@ -52,7 +52,7 @@ class CardVoucher extends Component {
 						{
 							this.props.created_at
 							? 	<div>{getDate(this.props.created_at)} ({this.getDays()} {getLang('dias')})</div>
-							: 	''
+							: 	null
 						}
 					</div>
 					<div className="col-6">
@@ -70,19 +70,17 @@ class CardVoucher extends Component {
 				</div>
 				{ 	
 					this.props.buttons
-					? 	<div className="row justify-content-center">
-							<div className="col-lg-10">
-								<BtnMain
-									title="Enviar para..."
-									onClick={this.openSendVoucher}
-									className="btn-block btn-outline" />
-								<BtnMain
-									title="Agendar"
-									onClick={this.addToScheduleCart}
-									className="btn-block" />
-							</div>
+					? 	<div>
+							<BtnMain
+								title="Enviar para..."
+								onClick={this.openSendVoucher}
+								className="btn-block btn-outline" />
+							<BtnMain
+								title="Agendar"
+								onClick={this.addToScheduleCart}
+								className="btn-block" />
 						</div>
-					: 	''
+					: 	null
 				}
 			</div>
 		)

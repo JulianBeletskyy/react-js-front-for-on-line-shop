@@ -121,7 +121,7 @@ export const saveCard = data => dispatch =>
         post(`api/user/creditcard/add`, true, data).then(json => {
             if (json.object) {
                 dispatch(addCard(json.object))
-                return true
+                return json.object.id
             }
         })
     )

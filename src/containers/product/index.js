@@ -68,7 +68,7 @@ class Product extends Component {
 												<div className="w-15 px-lg-3 px-sm-2 pr-2 pr-sm-0">
 													<Avatar image={image_url} edit={false} />
 												</div>
-												<div className="w-85">
+												<div className="w-85 overflow-hidden">
 													<div className="d-flex justify-content-between flex-wrap">
 														<h6>{ item.reviewer.first_name }</h6>
 														<div><Stars active={item.rating} /></div>

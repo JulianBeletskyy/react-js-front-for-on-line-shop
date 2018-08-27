@@ -31,34 +31,21 @@ export default function cart(cart = initialState, action = {}) {
                 updated: true
             });
         case types.SET_CART_TOTAL:
-            return Object.assign({}, cart, {
-                total: action.data
-            });
+            return {...cart, total: action.data}
         case types.SET_USE_CREDITS:
-            return Object.assign({}, cart, {
-                use_credits: action.value
-            });
+            return {...cart, use_credits: action.value}
         case types.SET_STEP:
-            return Object.assign({}, cart, {
-                step: action.step
-            });
+            return {...cart, step: action.step}
         case types.SET_UPDATED_CART:
-            return Object.assign({}, cart, {
-                updated: action.value
-            });
+            return {...cart, updated: action.value}
         case types.SET_GUEST_INFO:
-            return Object.assign({}, cart, {
-                [action.key]: action.data
-            })
+            console.log(action.data)
+            return {...cart, [action.key]: action.data}
         case types.SET_DELIVERY_TYPES:
-            return Object.assign({}, cart, {
-                delivery_types: action.data
-            })
+            return {...cart, delivery_types: action.data}
         case types.SET_DELIVERY_CART:
-            return Object.assign({}, cart, {
-                delivery: action.value
-            })
+            return {...cart, delivery: action.value}
         default:
-            return cart;
+            return cart
     }
 }

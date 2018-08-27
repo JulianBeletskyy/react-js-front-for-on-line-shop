@@ -100,10 +100,10 @@ class SearchMenuWeb extends Component {
     getData = (type, id, param) => {
         switch(type) {
             case 'product':
-                store.dispatch(getProducts('pagination', {category: id, new_pagination: true, page_size: 14, ...param}))
+                store.dispatch(getProducts('pagination', {category: id, new_pagination: true, page_size: 14, ...this.props.search.filters, ...param}))
                 break
             case 'service':
-                store.dispatch(getServices('pagination', {category: id, new_pagination: true, page_size: 14, ...param}))
+                store.dispatch(getServices('pagination', {category: id, new_pagination: true, page_size: 14, ...this.props.search.filters, ...param}))
                 break
             default: return
         }

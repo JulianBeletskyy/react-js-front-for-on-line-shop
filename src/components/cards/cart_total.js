@@ -48,7 +48,8 @@ class CartTotal extends Component {
 	}
 
 	getTotal = () => {
-        return this.props.cart.use_credits ? this.props.cart.total.total - this.props.user.credits / this.props.user.dollar_value : this.props.cart.total.total
+		const diffCredits = this.props.cart.total.total - this.props.user.credits / this.props.user.dollar_value
+        return this.props.cart.use_credits ? (diffCredits < 0 ? 0 : diffCredits) : this.props.cart.total.total
     }
 
     getUseCredits = () => {
@@ -59,6 +60,7 @@ class CartTotal extends Component {
 	 	const {  main_address } = this.props.user.data
         const { guestAddress } = this.props.cart
 		const lastStep = this.props.cart.list.service.length ? 4 : 5
+		const { disabledNext = false } = this.props
 
 		return (
 			<div className="rounded bg-white p-4">
@@ -81,9 +83,8 @@ class CartTotal extends Component {
 		                            <div className="color-grey">{guestAddress.title}</div>
 		                            <div className="color-grey">{getLang('CEP')}: {guestAddress.zipcode}</div>
 								</div>
-	                        : 	''
-						
-					: 	''
+	                        : 	null
+					: 	null
 				}{
 					this.props.step !== 3
 					? 	<div className="d-flex justify-content-between color-grey">
@@ -103,14 +104,14 @@ class CartTotal extends Component {
 							<div><h5>{getLang('Frete')}:</h5></div>
 							<div><Price current={this.props.cart.total.delivery} /></div>
 						</div>
-					: 	''
+					: 	null
 				}{
 					this.props.step === 4 || this.props.step === 5
 					? 	<div className="d-flex justify-content-between color-grey">
 							<div><h5>{getLang('Créditos')}:</h5></div>
 							<div><Price current={this.getUseCredits()} /></div>
 						</div>
-					: 	''
+					: 	null
 				}
 				<div className="border-bottom mb-3 mt-3"></div>
 				{
@@ -119,7 +120,7 @@ class CartTotal extends Component {
 							<div><h5>{getLang('Total')}:</h5></div>
 							<div><Price current={this.getTotal()} /></div>
 						</div>
-					: 	''
+					: 	null
 				}
 				<div className="col-sm-10 offset-sm-1">
 					{
@@ -135,10 +136,10 @@ class CartTotal extends Component {
 							                    className="btn-block btn-outline font-weight-bold mb-2"
 							                    onClick={() => store.dispatch(setStep(this.props.step-2))}
 							                    title="Alterar endereço" />
-				                    	: 	''
+				                    	: 	null
 				                    }
 		                    </div>
-						: 	''
+						: 	null
 					}{
 						this.props.step === lastStep
 						?	<div>
@@ -151,10 +152,11 @@ class CartTotal extends Component {
 				                    onClick={() => history.push('/purchased')}
 				                    title="Acompanhar produtos" />
 		                    </div>
-						: 	''
+						: 	null
 					}
 					<BtnMain
 	                    className="btn-block font-weight-bold"
+	                    disabled={disabledNext}
 	                    onClick={this.changeStep(lastStep)}
 	                    title={this.props.step === lastStep ? 'Continuar comprando' : 'Continuar'} />
                 </div>

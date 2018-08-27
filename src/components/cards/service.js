@@ -64,7 +64,8 @@ class CardService extends Component {
 	        schedule: []
 		}
 		store.dispatch(setProffesional(emptyData))
-		history.push(`/schedule/${this.props.id}`, this.props)
+		const { title, price, duration, id, vendor } = this.props
+		history.push(`/schedule/${this.props.id}`, { title, price, duration, id, vendor })
 	}
 
 	goToSalon = e => {

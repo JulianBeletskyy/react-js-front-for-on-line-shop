@@ -61,6 +61,14 @@ class Header extends Component {
         store.dispatch(getCategories())
     }
 
+    resolveMenu = type => {
+        if (window.innerWidth < 576) {
+            store.dispatch(toggleSideMenu(true))
+        } else {
+            this.setState({tooltip: type})
+        }
+    }
+
     render() {
         const contentTooltip = this.props.user.guest ? LoginForm : HeaderMenu
         const address = this.props.user.data.main_address ? this.props.user.data.main_address : this.props.user.data.address
@@ -83,7 +91,7 @@ class Header extends Component {
                                     title="Baixar" />
                             </div>
                         </div>
-                    :   ''
+                    :   null
                 }
                 <div className="bg-dark effect6 pb-lg-3">
                     <div className="container text-white pt-4">
@@ -130,7 +138,7 @@ class Header extends Component {
                                         {
                                             this.state.tooltip === 'cart'
                                             ?   <Tooltip title={getLang("Adicionado ao seu carrinho")} type="cart" content={CartHeader} close={() => this.setState({tooltip: false})} />
-                                            :   ''
+                                            :   null
                                         }
                                     </div>
                                     <div onClick={this.toggleTooltip('login')} id="login" className="header-link-icon col px-sm-0 form-group pointer d-none d-sm-block">
@@ -138,12 +146,12 @@ class Header extends Component {
                                         {
                                             this.props.user.guest
                                             ?   <span id="login">{getLang('Bem vindo')}<br /><strong id="login">{getLang('Entre ou cadastre-se')}</strong></span>
-                                            :   <span id="login">{getLang('Olá')}, {this.props.user.data.first_name}<br /><strong id="login">{getLang('Sejá bem-vindo')}</strong></span>
+                                            :   <span id="login">{getLang('Olá')}, {this.props.user.data.first_name}<br /><strong id="login">{getLang('Seja bem-vindo')}</strong></span>
                                         }
                                         {
                                             this.state.tooltip === 'login'
                                             ?   <Tooltip content={contentTooltip} type="login" close={() => this.setState({tooltip: false})} />
-                                            :   ''
+                                            :   null
                                         }
                                     </div>
                                     <div onClick={this.toggleTooltip('zip')} id="zip" className="header-link-icon col col-sm-5 px-lg-0 order-sm-first form-group pointer"> {/*col-12 col-sm-5*/}
@@ -158,9 +166,9 @@ class Header extends Component {
                                             ?   <Tooltip 
                                                     title={getLang("Adicionar CEP")} 
                                                     type="zip" content={ZipForm}
-                                                    openAnother={type => this.setState({tooltip: type})} 
+                                                    openAnother={type => this.resolveMenu(type)} 
                                                     close={() => this.setState({tooltip: false})} />
-                                            :   ''
+                                            :   null
                                         }
                                     </div>
                                 </div>

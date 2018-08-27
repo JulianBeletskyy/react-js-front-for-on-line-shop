@@ -76,7 +76,7 @@ class StepSecond extends Component {
                                     <div className="color-grey">{guestAddress.state}, {guestAddress.state}</div>
                                     <div className="color-grey">{getLang('CEP')}: {guestAddress.zipcode}</div>
                                 </div>
-                            :   ''
+                            :   null
                     }  
                     <div className="mb-3">
                         <BtnMain
@@ -91,7 +91,7 @@ class StepSecond extends Component {
         		</div>
         		<div className="col-sm-6">
         			<h4>{getLang('Resumo do pedido')}</h4>
-                    <CartTotal step={this.props.step} />
+                    <CartTotal step={this.props.step} disabledNext={!Object.keys(guestAddress).length && this.props.user.guest} />
         		</div>
         	</div>
         );

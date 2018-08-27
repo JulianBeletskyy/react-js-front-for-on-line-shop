@@ -30,7 +30,7 @@ class PromotionBlock extends Component {
 									</div>
 									<div>
 										<div className="color-grey">{getLang('Quantidade')}:</div>
-										<div>3 {getLang('itens')}</div>
+										<div>1 {getLang('itens')}</div>
 									</div>
 								</div>
 							</div>

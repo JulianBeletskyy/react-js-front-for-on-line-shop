@@ -32,16 +32,16 @@ class Footer extends Component {
                         </div>
                     </div>
 
-                    <div className="row mb-3 mb-sm-4 color-grey">
+                    <div className="row mb-3 mb-sm-4 color-grey footer-link">
                         <div className="col-sm col-12">
                             <div className="mb-sm-3">{getLang('Quem somos')}</div>
-                            <div className="mb-1">{getLang('Sobre o App')}</div>
-                            <div className="mb-1">{getLang('Sobre o Blog')}</div>
+                            <div><a href="#" className="mb-1">{getLang('Sobre o App')}</a></div>
+                            <div><a href="#" className="mb-1">{getLang('Sobre o Blog')}</a></div>
                         </div>
                         <div className="col-sm col-12">
                             <div className="mb-sm-3 mb-1">{getLang('Vantagens para clientes')}</div>
-                            <div className="mb-1">{getLang('Ofereça seus serviços')}</div>
-                            <div className="mb-1">{getLang('Anuncie seus produtos')}</div>
+                            <div><a href="#" className="mb-1">{getLang('Ofereça seus serviços')}</a></div>
+                            <div><a href="#" className="mb-1">{getLang('Anuncie seus produtos')}</a></div>
                             <div className="border-bottom w-100 d-sm-none mb-3"></div>
                         </div>
                         <div className="col-sm col-12">
@@ -58,17 +58,17 @@ class Footer extends Component {
                         </div>
                         <div className="col-sm col-12">
                             <div className="mb-3"><strong>{getLang('Sobre a WeMind Group')}</strong></div>
-                            <div className="mb-1">{getLang('Carreiras')}</div>
-                            <div className="mb-1">{getLang('Conheça a WeMind')}</div>
+                            <div><a href="#" className="mb-1">{getLang('Carreiras')}</a></div>
+                            <div><a href="#" className="mb-1">{getLang('Conheça a WeMind')}</a></div>
                         </div>
                     </div>
 
                     <div className="row pb-3 align-items-end">
                         <div className="col-sm-6 text-right">
                             <div className="row align-items-end mb-3 mb-sm-0">
-                                <div className="col-sm col-4 pr-0 text-xs-left">
-                                    <img src="/assets/icons/facebook-icon.png" alt="" className="footer-icon mr-2" />
-                                    <img src="/assets/icons/instagram-icon.png" alt="" className="footer-icon" />
+                                <div className="col-sm col-4 pr-0 text-xs-left footer-link">
+                                    <a href="#"><img src="/assets/icons/facebook-icon.png" alt="" className="footer-icon mr-2" /></a>
+                                    <a href="#"><img src="/assets/icons/instagram-icon.png" alt="" className="footer-icon" /></a>
                                 </div>
                                 <div className="col-sm col-8 text-left">
                                     <p className="color-grey">{getLang('Selecione um país/região')}</p>
@@ -79,8 +79,8 @@ class Footer extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-sm-6 order-sm-first color-grey">
-                            <span className="footer-copyright">{getLang('Uma empresa WeMind Group')} - www.wemindgroup.com</span>
+                        <div className="col-sm-6 order-sm-first color-grey footer-link">
+                            <span className="footer-copyright">{getLang('Uma empresa WeMind Group')} - <a href="#">www.wemindgroup.com</a></span>
                         </div>
                     </div>
                     <div className="border-bottom mb-2 d-sm-none"></div>

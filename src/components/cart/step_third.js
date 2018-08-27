@@ -61,7 +61,7 @@ class StepThird extends Component {
                                             inputRef={ref => this.cvv = ref} />
                                     </div>
                                 </div>
-                            :   ''
+                            :   null
                     }
                     <div className="mb-3">
                         <BtnMain
@@ -72,7 +72,9 @@ class StepThird extends Component {
         		</div>
         		<div className="col-sm-6">
         			<h4>{getLang('Resumo do pedido')}</h4>
-                    <CartTotal step={this.props.step} />
+                    <CartTotal 
+                        step={this.props.step}
+                        disabledNext={(!Object.keys(guestCard).length && this.props.user.guest) || (!Object.keys(default_card).length && !this.props.user.guest)} />
         		</div>
         	</div>
         );

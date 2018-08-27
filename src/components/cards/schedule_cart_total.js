@@ -17,6 +17,11 @@ class ScheduleCartTotal extends Component {
 			}
 
 			store.dispatch(makeAppointment(data))
+			.then(res => {
+				if (res) {
+					this.props.user.guest ? history.push('/') : history.push('/schedules')
+				}
+			})
 			return
 		}
 		store.dispatch(setScheduleStep(this.props.step+1))
@@ -57,7 +62,7 @@ class ScheduleCartTotal extends Component {
 							<div><h5>{getLang('Créditos')}:</h5></div>
 							<div><Price current={this.getUseCredits()} /></div>
 						</div>
-					: 	''
+					: 	null
 				}
 				<div className="border-bottom mb-3 mt-3"></div>
 				{
@@ -66,7 +71,7 @@ class ScheduleCartTotal extends Component {
 							<div><h5>{getLang('Total')}:</h5></div>
 							<div><Price current={this.getTotal()} /></div>
 						</div>
-					: 	''
+					: 	null
 				}
 				<div className="col-sm-10 offset-sm-1">
 					{
@@ -75,7 +80,7 @@ class ScheduleCartTotal extends Component {
 			                    className="btn-block btn-outline font-weight-bold"
 			                    onClick={() => store.dispatch(setScheduleStep(this.props.step-1))}
 			                    title="Alterar meio de pagamento" />
-						: 	''
+						: 	null
 					}
 					{
 						this.props.step === 4
@@ -88,7 +93,7 @@ class ScheduleCartTotal extends Component {
 				                    onClick={() => history.push('/', {active: 'service'})}
 				                    title="Agendar serviços" />
 		                    </div>
-						: 	''
+						: 	null
 					}
 
 					{
@@ -97,7 +102,7 @@ class ScheduleCartTotal extends Component {
 			                    className="btn-block font-weight-bold"
 			                    onClick={this.changeStep}
 			                    title="Continuar" />
-						: 	''
+						: 	null
 					}
                 </div>
 			</div>
@@ -110,6 +115,7 @@ const mapStateToProps = state =>
         user: {
             credits: state.user.credits,
             dollar_value: state.user.dollar_value,
+            guest: state.user.guest,
         },
         schedule_cart: {
         	use_credits: state.schedule_cart.use_credits,

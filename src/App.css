@@ -294,6 +294,15 @@ path.cls-8 {
     transform: scale(0.80) translate(-95%, 0px);
 }
 
+.footer-link a {
+	color: #A7A7A8;
+	text-decoration: none;
+}
+
+.footer-link a:hover {
+	color: #fff;
+}
+
 .font-avenir {
 	font-family: 'Avenir LT Std 45 Book';
 }
@@ -534,7 +543,7 @@ path.cls-8 {
 .telephone {
 	background-image: url('/assets/images/telephone.png');
 	background-repeat: no-repeat;
-	height: 700px;
+	min-height: 100%;
 	background-position: 30px 80px;
 	background-size: 32%;
 }

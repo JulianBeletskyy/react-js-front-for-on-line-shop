@@ -37,9 +37,8 @@ export const getProffesional = prof => dispatch =>
 
 export const makeAppointment = data => dispatch => 
     (
-        post(`api/appointment/new`, true, data).then(json => {
-            console.log(json)
-        })
+        post(`api/appointment/new`, true, data)
+        .then(json => json.status === 200)
     )
 
 export const setProffesional = data =>

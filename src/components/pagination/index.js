@@ -76,12 +76,12 @@ class Pagination extends Component {
 	}
 
 	printButtons = (item, i) => {
-		const activeClass = this.state.active === i+1 ? 'color-green' : 'color-grey'
+		const activeClass = this.state.active === i+1 ? 'bg-green text-white' : 'bg-white color-grey'
 		const hiddenClass = this.getHiddenClass(i+1)
 		
 		return 	<div 
 					key={i} ref={ref => this.list[i] = ref} 
-					className={`rounded bg-white p-2 px-3 mx-1 border pointer position-relative ${activeClass} ${hiddenClass}`} 
+					className={`rounded p-2 px-3 mx-1 border pointer position-relative ${activeClass} ${hiddenClass}`} 
 					onClick={this.setPage(i+1)}>
 					<div className={`d-none ${hiddenClass}`}>
 						<i className="fas fa-ellipsis-h position-absolute"></i>

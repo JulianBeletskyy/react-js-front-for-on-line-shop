@@ -4,7 +4,7 @@ import store, { history } from 'store'
 import BtnMain from 'components/buttons/btn_main'
 import CheckBox from 'components/inputs/checkbox'
 import { ProfileForm, AddressForm, CardForm, PasswordForm } from 'components/forms'
-import { saveCard, saveAddress } from 'actions/user'
+import { saveCard, saveAddress, toggleDefaultCard } from 'actions/user'
 import { getLang } from 'utils/lang'
 import Validator from 'utils/validator'
 
@@ -53,6 +53,10 @@ class Edit extends Component {
 
     saveCard = () => {
     	store.dispatch(saveCard(this.cardData)).then(res => {
+            if (this.props.user.cards.length === 1) {
+                store.dispatch(toggleDefaultCard(res))
+            }
+
             if (this.state.showAddressForm) {
     			store.dispatch(saveAddress(this.addressData)).then(res => {
                     history.goBack()
@@ -138,7 +142,9 @@ const mapStateToProps = state =>
         		first_name: state.user.data.first_name,
         		last_name: state.user.data.last_name,
         		user_email: state.user.data.user_email,
-        	}
+        	},
+            default_card: state.user.default_card,
+            cards: state.user.cards,
         }
     })
 
