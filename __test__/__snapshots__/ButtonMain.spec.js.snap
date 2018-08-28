@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render renders correctly 1`] = `
+<div>
+  <button
+    className="btn btn-primary test"
+    disabled={true}
+    type="button"
+  >
+    Carrinho
+  </button>
+</div>
+`;

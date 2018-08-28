@@ -3,11 +3,14 @@ import { format } from 'utils/mask'
 import { getLang } from 'utils/lang'
 
 class Counter extends Component {
-	state = {
-		count: 1,
-	}
+	constructor() {
+		super()
+		this.state = {
+			count: 1,
+		}
 
-	step = this.props.step || 1
+		this.step = this.props.step || 1
+	}
 
 	increment = e => {
 		e.preventDefault()
