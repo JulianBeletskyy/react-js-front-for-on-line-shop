@@ -91,7 +91,7 @@ class StepSecond extends Component {
         		</div>
         		<div className="col-sm-6">
         			<h4>{getLang('Resumo do pedido')}</h4>
-                    <CartTotal step={this.props.step} disabledNext={!Object.keys(guestAddress).length && this.props.user.guest} />
+                    <CartTotal step={this.props.step} disabledNext={(!Object.keys(guestAddress).length && this.props.user.guest) || (!Object.keys(main_address).length && !this.props.user.guest) || !this.state.delivery} />
         		</div>
         	</div>
         );

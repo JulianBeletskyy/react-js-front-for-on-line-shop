@@ -10,10 +10,17 @@ import Input from 'components/inputs/input'
 import { format } from 'utils/mask'
 import { getLang } from 'utils/lang'
 
+let state = {cvv: ''}
+
 class StepSecond extends Component {
+    constructor() {
+        super()
+        this.state = state
+    }
     
     checkMask = (mask, field) => val => {
         this.cvv.value = format(mask, val)
+        this.setState({cvv: this.cvv.value})
     }
 
     changeBilling = () => {
@@ -30,7 +37,13 @@ class StepSecond extends Component {
         }
     }
 
+    isValidCVV = () => this.state.cvv.length === 3
+
     getCardNumber = num => `****.****.****.${num.slice(-4)}`
+
+    componentWillUnmount() {
+        state = this.state
+    }
 
     render() {
         const { default_card } = this.props.user
@@ -48,7 +61,7 @@ class StepSecond extends Component {
                                 <div className="color-grey">{getLang('Coloque o código de segurança do cartão')}</div>
                                 <div className="d-flex">
                                     <Input
-                                        value={''}
+                                        value={this.state.cvv}
                                         className="bg-main"
                                         onChange={this.checkMask('cvv', 'cvv')}
                                         inputRef={ref => this.cvv = ref} />
@@ -62,7 +75,7 @@ class StepSecond extends Component {
                                     <div className="color-grey">{getLang('Coloque o código de segurança do cartão')}</div>
                                     <div className="d-flex">
                                         <Input
-                                            value={''}
+                                            value={this.state.cvv}
                                             className="bg-main"
                                             onChange={this.checkMask('cvv', 'cvv')}
                                             inputRef={ref => this.cvv = ref} />
@@ -79,7 +92,10 @@ class StepSecond extends Component {
                 </div>
                 <div className="col-sm-6">
                     <h4>{getLang('Resumo do pedido')}</h4>
-                    <ScheduleCartTotal value={this.props.cart.total} step={this.props.step} />
+                    <ScheduleCartTotal 
+                        value={this.props.cart.total} 
+                        step={this.props.step} 
+                        disabledNext={(!Object.keys(guestCard).length && this.props.user.guest) || (!Object.keys(default_card).length && !this.props.user.guest) ||  !this.isValidCVV()} />
                 </div>
             </div>
         );

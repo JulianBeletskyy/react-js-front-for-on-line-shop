@@ -9,7 +9,14 @@ import Input from 'components/inputs/input'
 import { format } from 'utils/mask'
 import { getLang } from 'utils/lang'
 
+let state = {cvv: ''}
+
 class StepThird extends Component {
+
+    constructor() {
+        super()
+        this.state = state
+    }
 
     changeBilling = () => {
         if (this.props.user.guest) {
@@ -21,9 +28,16 @@ class StepThird extends Component {
 
     checkMask = (mask, field) => val => {
         this.cvv.value = format(mask, val)
+        this.setState({cvv: this.cvv.value})
     }
 
+    isValidCVV = () => this.state.cvv.length === 3
+
     getCardNumber = num => `****.****.****.${num.slice(-4)}`
+
+    componentWillUnmount() {
+        state = this.state
+    }
 
     render() {
         const { default_card } = this.props.user
@@ -41,7 +55,7 @@ class StepThird extends Component {
                                 <div className="color-grey">{getLang('Coloque o código de segurança do cartão')}</div>
                                 <div className="d-flex">
                                     <Input
-                                        value={''}
+                                        value={this.state.cvv}
                                         className="bg-main"
                                         onChange={this.checkMask('cvv', 'cvv')}
                                         inputRef={ref => this.cvv = ref} />
@@ -55,7 +69,7 @@ class StepThird extends Component {
                                     <div className="color-grey">{getLang('Coloque o código de segurança do cartão')}</div>
                                     <div className="d-flex">
                                         <Input
-                                            value={''}
+                                            value={this.state.cvv}
                                             className="bg-main"
                                             onChange={this.checkMask('cvv', 'cvv')}
                                             inputRef={ref => this.cvv = ref} />
@@ -74,7 +88,7 @@ class StepThird extends Component {
         			<h4>{getLang('Resumo do pedido')}</h4>
                     <CartTotal 
                         step={this.props.step}
-                        disabledNext={(!Object.keys(guestCard).length && this.props.user.guest) || (!Object.keys(default_card).length && !this.props.user.guest)} />
+                        disabledNext={(!Object.keys(guestCard).length && this.props.user.guest) || (!Object.keys(default_card).length && !this.props.user.guest) ||  !this.isValidCVV()} />
         		</div>
         	</div>
         );

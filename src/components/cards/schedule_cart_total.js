@@ -28,18 +28,30 @@ class ScheduleCartTotal extends Component {
 	}
 
 	getTotal = () => {
-        return this.props.schedule_cart.use_credits ? this.props.schedule_cart.total - this.props.user.credits / this.props.user.dollar_value : this.props.schedule_cart.total
+		const diffCredits = this.props.schedule_cart.total - this.props.user.credits / this.props.user.dollar_value
+        return this.props.schedule_cart.use_credits ? (diffCredits < 0 ? 0 : diffCredits) : this.props.schedule_cart.total
     }
 
     setUseCredits = e => {
 		store.dispatch(setScheduleUseCredits(e.target.checked))
 	}
 
+	getUsedCredits = () => {
+    	const sumInCredits = this.props.schedule_cart.total / this.props.user.dollar_value
+    	const totalInUser = this.props.user.credits / this.props.user.dollar_value
+    	return this.props.schedule_cart.use_credits ? (totalInUser >= sumInCredits ? this.props.schedule_cart.total : (sumInCredits - totalInUser) * this.props.user.dollar_value) : 0
+    }
+
 	getUseCredits = () => {
     	return this.props.schedule_cart.use_credits ? this.props.user.credits / this.props.user.dollar_value : 0
     }
 
+    getUserCredits = () => {
+    	return this.props.schedule_cart.use_credits ? (this.props.user.credits / this.props.user.dollar_value) - this.props.schedule_cart.total : this.props.user.credits / this.props.user.dollar_value
+    }
+
 	render() {
+		const { disabledNext = false } = this.props
 		return (
 			<div className="rounded bg-white p-4">
 				{
@@ -51,7 +63,7 @@ class ScheduleCartTotal extends Component {
 					: 	<div>
 							<h5>{getLang('Usar créditos')}</h5>
 							<div className="d-flex justify-content-between color-grey">
-								<div><Price className="d-inline-block" current={this.props.user.credits / this.props.user.dollar_value} /> {getLang('créditos')}</div>
+								<div><Price className="d-inline-block" current={this.getUserCredits()} /> {getLang('créditos')}</div>
 								<div><CheckBox value={this.props.schedule_cart.use_credits} onChange={this.setUseCredits} /></div>
 							</div>
 						</div>
@@ -60,7 +72,7 @@ class ScheduleCartTotal extends Component {
 					this.props.step === 3 || this.props.step === 4
 					? 	<div className="d-flex justify-content-between color-grey">
 							<div><h5>{getLang('Créditos')}:</h5></div>
-							<div><Price current={this.getUseCredits()} /></div>
+							<div><Price current={this.getUsedCredits()} /></div>
 						</div>
 					: 	null
 				}
@@ -101,6 +113,7 @@ class ScheduleCartTotal extends Component {
 						? 	<BtnMain
 			                    className="btn-block font-weight-bold"
 			                    onClick={this.changeStep}
+			                    disabled={disabledNext}
 			                    title="Continuar" />
 						: 	null
 					}

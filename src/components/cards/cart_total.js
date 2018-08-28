@@ -53,7 +53,7 @@ class CartTotal extends Component {
     }
 
     getUserCredits = () => {
-    	return this.props.cart.use_credits ? (this.props.user.credits / this.props.user.dollar_value) - (this.props.cart.total.total / this.props.user.dollar_value) : this.props.user.credits / this.props.user.dollar_value
+    	return this.props.cart.use_credits ? (this.props.user.credits / this.props.user.dollar_value) - this.props.cart.total.total : this.props.user.credits / this.props.user.dollar_value
     }
 
     getUsedCredits = () => {

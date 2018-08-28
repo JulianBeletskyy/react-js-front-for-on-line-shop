@@ -23,7 +23,10 @@ class StepFirst extends Component {
         		</div>
         		<div className="col-sm-6">
                     <h4>{getLang('Resumo do pedido')}</h4>
-                    <ScheduleCartTotal value={this.props.cart.total} step={this.props.step} />
+                    <ScheduleCartTotal
+                        value={this.props.cart.total}
+                        disabledNext={!this.props.schedule_cart.proffesional.professional.id || !this.props.schedule_cart.activeDate || !this.props.schedule_cart.activeTime}
+                        step={this.props.step} />
         		</div>
         	</div>
         );
@@ -34,6 +37,11 @@ const mapStateToProps = state =>
     ({
         cart: {
             total: state.cart.total
+        },
+        schedule_cart: {
+            activeDate: state.schedule_cart.activeDate,
+            activeTime: state.schedule_cart.activeTime,
+            proffesional: state.schedule_cart.proffesional,
         },
         services: {
             salon: state.services.salon
