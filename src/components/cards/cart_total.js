@@ -52,14 +52,20 @@ class CartTotal extends Component {
         return this.props.cart.use_credits ? (diffCredits < 0 ? 0 : diffCredits) : this.props.cart.total.total
     }
 
-    getUseCredits = () => {
-    	return this.props.cart.use_credits ? this.props.user.credits / this.props.user.dollar_value : 0
+    getUserCredits = () => {
+    	return this.props.cart.use_credits ? (this.props.user.credits / this.props.user.dollar_value) - (this.props.cart.total.total / this.props.user.dollar_value) : this.props.user.credits / this.props.user.dollar_value
+    }
+
+    getUsedCredits = () => {
+    	const sumInCredits = this.props.cart.total.total / this.props.user.dollar_value
+    	const totalInUser = this.props.user.credits / this.props.user.dollar_value
+    	return this.props.cart.use_credits ? (totalInUser >= sumInCredits ? this.props.cart.total.total : (sumInCredits - totalInUser) * this.props.user.dollar_value) : 0
     }
 
 	render() {
 	 	const {  main_address } = this.props.user.data
         const { guestAddress } = this.props.cart
-		const lastStep = this.props.cart.list.service.length ? 4 : 5
+		const lastStep = (this.props.cart.list.service.length ? 4 : 5)
 		const { disabledNext = false } = this.props
 
 		return (
@@ -94,7 +100,7 @@ class CartTotal extends Component {
 					: 	<div>
 							<h5>{getLang('Usar créditos')}</h5>
 							<div className="d-flex justify-content-between color-grey">
-								<div><Price className="d-inline-block" current={this.props.user.credits / this.props.user.dollar_value} /> {getLang('créditos')}</div>
+								<div><Price className="d-inline-block" current={this.getUserCredits()} /> {getLang('créditos')}</div>
 								<div><CheckBox value={this.props.cart.use_credits} onChange={this.setUseCredits} /></div>
 							</div>
 						</div>
@@ -109,7 +115,7 @@ class CartTotal extends Component {
 					this.props.step === 4 || this.props.step === 5
 					? 	<div className="d-flex justify-content-between color-grey">
 							<div><h5>{getLang('Créditos')}:</h5></div>
-							<div><Price current={this.getUseCredits()} /></div>
+							<div><Price current={this.getUsedCredits()} /></div>
 						</div>
 					: 	null
 				}

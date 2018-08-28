@@ -105,7 +105,7 @@ class Edit extends Component {
 									<div>{getLang('É o mesmo endereço de entrega?')}</div>
 									<div><CheckBox onChange={this.toggleAddressForm} value={this.state.showAddressForm} /></div>
 								</div>
-								{this.state.showAddressForm ? <AddressForm onCardForm={true} onChangeForm={this.getAddressData} /> : null}
+								{!this.state.showAddressForm && <AddressForm onCardForm={true} onChangeForm={this.getAddressData} />}
 							</div>		
 						: 	null
 					}
@@ -120,7 +120,7 @@ class Edit extends Component {
 				                            title="Cancelar" />
 				                        <BtnMain
 				                            className="font-weight-bold btn-block"
-				                            disabled={this.state.showAddressForm ? (!Validator.isValid('card') || !Validator.isValid('address')) : !Validator.isValid('card')}
+				                            disabled={!this.state.showAddressForm ? (!Validator.isValid('card') || !Validator.isValid('address')) : !Validator.isValid('card')}
 				                            onClick={this.saveCard}
 				                            title="Salvar" />
 				                    </div>

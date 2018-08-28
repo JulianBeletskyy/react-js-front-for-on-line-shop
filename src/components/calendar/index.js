@@ -2,20 +2,36 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from 'store'
 import { getDaysInMonth } from 'utils/date'
+import { history } from 'store'
 import Carousel from 'components/carousel'
 import { getLang } from 'utils/lang'
 import { times } from 'config'
-import { getTime } from 'utils/date'
+import { getTimeInMinutes } from 'utils/date'
 import { setScheduleCartKey } from 'actions/schedule_cart'
 import './style.css'
 
+let state = {
+	currentDate: new Date().getDate(),
+	activeTime: 0,
+    activeDate: 0,
+    activeIntervals: []
+}
+
 class Calendar extends Component {
-	state = {
-		currentDate: new Date().getDate(),
-		activeTime: 0,
-        activeDate: 0,
-        activeIntervals: []
+	constructor() {
+		super()
+		this.state = state
+
+		history.listen(location => {
+			state = {
+				currentDate: new Date().getDate(),
+				activeTime: 0,
+			    activeDate: 0,
+			    activeIntervals: []
+			}
+		})
 	}
+	
 
 	setActiveTime = activeTime => e => {
 		this.state.activeTime === activeTime ? this.setState({activeTime: 0}) : this.setState({activeTime})
@@ -41,18 +57,18 @@ class Calendar extends Component {
     }
 
 	printTimes = (item, i, length) => {
-		const fromHour = getTime(item.from)
-		const toHour = getTime(item.to)
+		const fromHour = getTimeInMinutes(item.from)
+		const toHour = getTimeInMinutes(item.to)
 
 		return times.map((time, index) => {
-			const [hour] = time.split(':')
-			if (hour * 1 >= fromHour * 1 && hour * 1 <= toHour * 1) {
+			const [hour, minute] = time.split(':')
+			if ((hour * 60 + minute * 1) >= fromHour && (hour * 60 + minute * 1) < toHour) {
 				return 	<div key={index} className={`border-bottom py-2 pl-4 pr-5 color-grey pointer d-flex justify-content-between text-center`} onClick={this.setActiveTime(time)}>
 							<div>{time}</div>
 							{
 								time === this.state.activeTime
 								?	<div><img src="/assets/icons/check-icon.png" alt="" className="img-fluid img-icon-header" /></div>
-								: 	''
+								: 	null
 							}
 						</div>
 			}
@@ -75,6 +91,10 @@ class Calendar extends Component {
 		return []
 	}
 
+	componentWillUnmount() {
+		state = this.state
+	}
+
     render() {
     	const settings = {
             slidesToShow: 5,
@@ -95,7 +115,6 @@ class Calendar extends Component {
             	}
             ]
         }
-
         return (
         	<div className="bg-white rounded overflow-hidden">
         		<div className="row justify-content-center">

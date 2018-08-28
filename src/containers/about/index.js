@@ -60,8 +60,9 @@ class About extends Component {
 											</span>
 										</div>
 									  	<input 
-									  		type="text" className="form-control" 
-									  		onChange={this.checkMask('phone', 'phone')}
+									  		type="text"
+									  		className="form-control" 
+									  		onChange={this.checkMask('phone-dot', 'phone')}
 									  		placeholder={getLang("Seu número")}
 				                            ref={ref => this.phone = ref} />
 									</div>

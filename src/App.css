@@ -536,7 +536,7 @@ path.cls-8 {
 	background-repeat: no-repeat;
 	height: calc(100vh - 190px);
 	background-position: -5px -5px;
-	background-size: 63%;
+	background-size: 70%;
 	min-height: 500px;
 }
 
@@ -544,7 +544,7 @@ path.cls-8 {
 	background-image: url('/assets/images/telephone.png');
 	background-repeat: no-repeat;
 	min-height: 100%;
-	background-position: 30px 80px;
+	background-position: 10% 80px;
 	background-size: 32%;
 }
 
@@ -573,18 +573,27 @@ path.cls-8 {
   	overflow: hidden;
 }
 
-@media(max-width: 1640px) {
-	.about-wrap {
-		background-size: 68%;
-	}
+@media(max-width: 1500px) {
 	.telephone {
-		height: 100%;
+		background-position: 0% 80px;
 	}
 }
 
-@media(max-width: 1440px) {
+@media(max-width: 1200px) {
 	.about-wrap {
-		background-size: 67%;
+		background-size: 80%;
+	}
+}
+
+@media(max-width: 991px) {
+	.about-wrap {
+		background-size: 90%;
+	}
+}
+
+@media(max-width: 767px) {
+	.about-wrap {
+		background-size: 100%;
 	}
 }
 

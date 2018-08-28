@@ -13,6 +13,13 @@ export const getTime = date => {
     return h
 }
 
+export const getTimeInMinutes = date => {
+    const [, temp] = date.split('T')
+    const [time] = temp.split('+')
+    const [h,m] = time.split(':')
+    return (h * 60) + m * 1
+}
+
 export const getFullTime = date => {
     const [, temp] = date.split('T')
     const [time] = temp.split('+')

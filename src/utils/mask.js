@@ -85,6 +85,18 @@ export const format = (mask, value) => {
                 digitsValue = `(${digitsValue.slice(0,2)})${digitsValue.slice(2)}`
             }
             return digitsValue
+        case 'phone-dot':
+            if (digitsValue.length > 11) {
+                digitsValue = digitsValue.slice(0, 11)
+            }
+            if (digitsValue.length >= 8) {
+                digitsValue = `(${digitsValue.slice(0,2)})${digitsValue.slice(2,3)}.${digitsValue.slice(3,7)}-${digitsValue.slice(7)}`
+            } else if (digitsValue.length >= 4) {
+                digitsValue = `(${digitsValue.slice(0,2)})${digitsValue.slice(2, 3)}.${digitsValue.slice(3)}`
+            } else if (digitsValue.length >= 3) {
+                digitsValue = `(${digitsValue.slice(0,2)})${digitsValue.slice(2)}`
+            }
+            return digitsValue
         case 'cep':
             if (digitsValue.length > 8) {
                 digitsValue = digitsValue.slice(0, 8)
