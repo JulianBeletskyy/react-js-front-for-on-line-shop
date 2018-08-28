@@ -43,11 +43,15 @@ class ScheduleCartTotal extends Component {
     }
 
 	getUseCredits = () => {
+		
+
     	return this.props.schedule_cart.use_credits ? this.props.user.credits / this.props.user.dollar_value : 0
     }
 
     getUserCredits = () => {
-    	return this.props.schedule_cart.use_credits ? (this.props.user.credits / this.props.user.dollar_value) - this.props.schedule_cart.total : this.props.user.credits / this.props.user.dollar_value
+    	const totalInUser = this.props.user.credits / this.props.user.dollar_value - this.props.schedule_cart.total
+
+    	return this.props.schedule_cart.use_credits ? (totalInUser > 0 ? totalInUser : 0) : this.props.user.credits / this.props.user.dollar_value
     }
 
 	render() {
